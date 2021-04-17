@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "prebuild": "rimraf ./dist && rimraf ./lib",
-    "build": "pnpm prebuild && tsc --project tsconfig.prod.json && ncc build",
+    "build": "yarn prebuild && tsc --project tsconfig.prod.json && ncc build",
     "lint": "eslint src/**/*.ts",
     "test": "jest",
     "test:dev": "jest --watchAll --coverage",
