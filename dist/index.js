@@ -18,8 +18,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.pushBadges = void 0;
+const core_1 = __nccwpck_require__(4693);
 const exec_1 = __nccwpck_require__(4909);
 const pushBadges = () => __awaiter(void 0, void 0, void 0, function* () {
+    const diffResult = yield exec_1.exec("git diff", ["--exit-code", "badges"]);
+    const hasNoChanges = diffResult === 0;
+    if (hasNoChanges) {
+        core_1.info("> Coverage has not evolved, no action required.");
+        return;
+    }
     yield exec_1.exec("git add", ["./badges"]);
     yield exec_1.exec("git commit", ["-m", `"Coverage badges"`]);
     yield exec_1.exec("git push");
