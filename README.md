@@ -24,12 +24,12 @@ You also need to run jest before calling this action in your ci workflow. See `u
 
 ## :zap: Usage
 
-Let's first define an npm script to run jest in package.json:
+Let's first define an npm script to run jest in package.json, specifying the coverage option to generate a coverage report:
 
 ```json
 {
   "scripts": {
-    "test:ci": "jest --ci --runInBand"
+    "test:ci": "jest --ci --runInBand --coverage"
   }
 }
 ```
