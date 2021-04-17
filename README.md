@@ -10,29 +10,46 @@
 
 This github action generates testing coverage badges using jest and pushes them back to the repo.
 
-## :zap: Inputs
+## :zap: Requirements
 
-### :diamonds: `major-keywords`
+You will need to add json-summary to coverage reporters in jest config:
 
-Commits messages starting with these keywords will trigger a major bump. Commas may be used to specify more than one keyword
+```javascript
+module.exports = {
+   coverageReporters: ["json-summary"];
+};
+```
 
-> Default value: **[Major]:**
+You also need to run jest before calling this action in your ci workflow. See `usage` for an example.
 
 ## :zap: Usage
 
-### :diamonds: Using defaults
+Let's first define an npm script to run jest in package.json:
 
-If the action runs on a commit whose message starts with either `[Major]:`, `[Minor]:` or `[Patch]:`, the version will be bumped and a tag will be created.
+```json
+{
+  "scripts": {
+    "test:ci": "jest --ci --runInBand"
+  }
+}
+```
+
+Let's then define our workflow:
 
 ```yaml
-name: package bump
+name: My ci things
 on: [push]
 jobs:
   bump:
     runs-on: ubuntu-latest
     steps:
+    # Necessary to push the generated badges to the repo
     - name: Check out repository code
       uses: actions/checkout@v2
+    # Necessary to generate the coverage report. Make sur to add 'json-summary' to the coverageReporters in jest options
+    - name: Tests
+      run: yarn test:ci
     [...]
-    - uses: actions/bump-package@v2.1.1
+    - name: Generating coverage badges
+    - uses: actions/jest-badges-action@v1.1.0
 ```
