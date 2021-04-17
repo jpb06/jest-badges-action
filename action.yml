@@ -1,0 +1,24 @@
+name: "Bump package version"
+description: "Bumping package version depending on keywords present in the commit message"
+
+inputs:
+  major-keywords:
+    description: "Keywords triggering a major bump, separated by commas if more than one."
+    default: "[Major]:"
+  minor-keywords:
+    description: "Keywords triggering a minor bump, separated by commas if more than one."
+    default: "[Minor]:"
+  patch-keywords:
+    description: "Keywords triggering a patch bump, separated by commas if more than one."
+    default: "[Patch]:"
+  create-tag:
+    description: "Whether a tag should be created for the new version."
+    default: "false"
+
+runs:
+  using: "node12"
+  main: "dist/index.js"
+
+branding:
+  icon: git-commit
+  color: gray-dark
