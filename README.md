@@ -46,7 +46,8 @@ jobs:
     # Necessary to push the generated badges to the repo
     - name: Check out repository code
       uses: actions/checkout@v2
-    # Necessary to generate the coverage report. Make sur to add 'json-summary' to the coverageReporters in jest options
+    # Necessary to generate the coverage report.
+    # Make sure to add 'json-summary' to the coverageReporters in jest options
     - name: Tests
       run: yarn test:ci
     [...]
