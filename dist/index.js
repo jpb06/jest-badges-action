@@ -22,7 +22,8 @@ const core_1 = __nccwpck_require__(4693);
 const exec_1 = __nccwpck_require__(4909);
 const execFile_1 = __nccwpck_require__(2398);
 const pushBadges = () => __awaiter(void 0, void 0, void 0, function* () {
-    const { stdout } = yield execFile_1.execFile("git diff", [
+    const { stdout } = yield execFile_1.execFile("git", [
+        "diff",
         "--quiet",
         "badges",
         "|| echo $?",

@@ -29,7 +29,8 @@ describe("pushBadges function", () => {
     await pushBadges();
 
     expect(execFile).toHaveBeenCalledTimes(1);
-    expect(execFile).toHaveBeenCalledWith("git diff", [
+    expect(execFile).toHaveBeenCalledWith("git", [
+      "diff",
       "--quiet",
       "badges",
       "|| echo $?",

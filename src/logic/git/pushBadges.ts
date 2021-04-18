@@ -4,11 +4,13 @@ import { exec } from "@actions/exec";
 import { execFile } from "../shell/execFile";
 
 export const pushBadges = async (): Promise<void> => {
-  const { stdout } = await execFile("git diff", [
+  const { stdout } = await execFile("git", [
+    "diff",
     "--quiet",
     "badges",
     "|| echo $?",
   ]);
+
   const hasNoChanges = stdout !== "1";
   if (hasNoChanges) {
     info("> Coverage has not evolved, no action required.");
