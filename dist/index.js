@@ -30,7 +30,7 @@ const pushBadges = () => __awaiter(void 0, void 0, void 0, function* () {
         return;
     }
     yield exec_1.exec("git add", ["./badges"]);
-    yield exec_1.exec("git commit", ["-m", `"Coverage badges"`]);
+    yield exec_1.exec("git commit", ["-m", "Updating coverage badges"]);
     yield exec_1.exec("git push");
 });
 exports.pushBadges = pushBadges;

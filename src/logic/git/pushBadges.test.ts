@@ -29,7 +29,7 @@ describe("pushBadges function", () => {
     expect(exec).toHaveBeenNthCalledWith(2, "git add", ["./badges"]);
     expect(exec).toHaveBeenNthCalledWith(3, "git commit", [
       "-m",
-      `"Coverage badges"`,
+      "Updating coverage badges",
     ]);
     expect(exec).toHaveBeenNthCalledWith(4, "git push");
   });
