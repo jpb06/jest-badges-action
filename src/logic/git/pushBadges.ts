@@ -1,22 +1,13 @@
-import { error, info } from "@actions/core";
+import { info } from "@actions/core";
 import { exec } from "@actions/exec";
 
-import { execFile } from "../shell/execFile";
-
 export const pushBadges = async (): Promise<void> => {
-  const { stdout, stderr } = await execFile("git", [
-    "diff",
-    "--quiet",
-    "badges",
-    "|| echo $?",
-  ]);
-  if (stderr.length > 0) {
-    error(`> An error occured while running git diff: \n\n${stderr}`);
-    return;
-  }
+  const code = await exec("git diff", ["--quiet", "badges"], {
+    ignoreReturnCode: true,
+  });
 
-  const hasChanges = stdout === "1";
-  if (!hasChanges) {
+  const hasNoChanges = code === 0;
+  if (hasNoChanges) {
     info("> Coverage has not evolved, no action required.");
     return;
   }
