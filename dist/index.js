@@ -20,9 +20,14 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.pushBadges = void 0;
 const core_1 = __nccwpck_require__(4693);
 const exec_1 = __nccwpck_require__(4909);
+const execFile_1 = __nccwpck_require__(2398);
 const pushBadges = () => __awaiter(void 0, void 0, void 0, function* () {
-    const diffResult = yield exec_1.exec("git diff", ["--exit-code", "badges"]);
-    const hasNoChanges = diffResult === 0;
+    const { stdout } = yield execFile_1.execFile("git diff", [
+        "--quiet",
+        "badges",
+        "|| echo $?",
+    ]);
+    const hasNoChanges = stdout !== "1";
     if (hasNoChanges) {
         core_1.info("> Coverage has not evolved, no action required.");
         return;
@@ -104,6 +109,24 @@ const isJestCoverageReportAvailable = () => __awaiter(void 0, void 0, void 0, fu
     return true;
 });
 exports.isJestCoverageReportAvailable = isJestCoverageReportAvailable;
+
+
+/***/ }),
+
+/***/ 2398:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.execFile = void 0;
+const child_process_1 = __importDefault(__nccwpck_require__(3129));
+const util_1 = __importDefault(__nccwpck_require__(1669));
+const execFile = util_1.default.promisify(child_process_1.default.execFile);
+exports.execFile = execFile;
 
 
 /***/ }),
