@@ -22,14 +22,18 @@ const core_1 = __nccwpck_require__(4693);
 const exec_1 = __nccwpck_require__(4909);
 const execFile_1 = __nccwpck_require__(2398);
 const pushBadges = () => __awaiter(void 0, void 0, void 0, function* () {
-    const { stdout } = yield execFile_1.execFile("git", [
+    const { stdout, stderr } = yield execFile_1.execFile("git", [
         "diff",
         "--quiet",
         "badges",
         "|| echo $?",
     ]);
-    const hasNoChanges = stdout !== "1";
-    if (hasNoChanges) {
+    if (stderr.length > 0) {
+        core_1.error(`> An error occured while running git diff: \n\n${stderr}`);
+        return;
+    }
+    const hasChanges = stdout === "1";
+    if (!hasChanges) {
         core_1.info("> Coverage has not evolved, no action required.");
         return;
     }

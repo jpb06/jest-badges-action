@@ -1,6 +1,6 @@
 import { mocked } from "ts-jest/utils";
 
-import { info } from "@actions/core";
+import { error, info } from "@actions/core";
 import { exec } from "@actions/exec";
 
 import { execFile } from "../shell/execFile";
@@ -21,6 +21,24 @@ describe("pushBadges function", () => {
     expect(execFile).toHaveBeenCalledTimes(1);
     expect(exec).toHaveBeenCalledTimes(0);
     expect(info).toHaveBeenCalledTimes(1);
+  });
+
+  it("should end the task if git diff has errors", async () => {
+    const errorMessage = "Oh no!";
+    mocked(execFile).mockResolvedValueOnce({
+      stdout: "",
+      stderr: errorMessage,
+    });
+
+    await pushBadges();
+
+    expect(execFile).toHaveBeenCalledTimes(1);
+    expect(exec).toHaveBeenCalledTimes(0);
+    expect(info).toHaveBeenCalledTimes(0);
+    expect(error).toHaveBeenCalledTimes(1);
+    expect(error).toHaveBeenCalledWith(
+      `> An error occured while running git diff: \n\n${errorMessage}`
+    );
   });
 
   it("should push changes", async () => {
