@@ -1,7 +1,7 @@
-import { pathExists, readJson } from "fs-extra";
-import { mocked } from "ts-jest/utils";
+import { pathExists, readJson } from 'fs-extra';
+import { mocked } from 'ts-jest/utils';
 
-import { isJestCoverageReportAvailable } from "./isJestCoverageReportAvailable";
+import { isJestCoverageReportAvailable } from './isJestCoverageReportAvailable';
 
 jest.mock("fs-extra");
 
