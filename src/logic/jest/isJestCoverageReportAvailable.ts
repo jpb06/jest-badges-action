@@ -1,5 +1,5 @@
-import { pathExists, readJson } from "fs-extra";
-import { CoverageSummary, FileCoverageTotal } from "node-jest-badges";
+import { pathExists, readJson } from 'fs-extra';
+import { CoverageSummary, FileCoverageTotal } from 'node-jest-badges';
 
 const isUndefined = (element?: FileCoverageTotal) => element?.pct === undefined;
 

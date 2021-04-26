@@ -1,13 +1,10 @@
 import { info } from "@actions/core";
 import { exec } from "@actions/exec";
+import { hasCoverageEvolved } from "../jest/hasCoverageEvolved";
 
 export const pushBadges = async (): Promise<void> => {
-  const code = await exec("git diff", ["--quiet", "badges"], {
-    ignoreReturnCode: true,
-  });
-
-  const hasNoChanges = code === 0;
-  if (hasNoChanges) {
+  const hasEvolved = await hasCoverageEvolved();
+  if (!hasEvolved) {
     info("> Coverage has not evolved, no action required.");
     return;
   }

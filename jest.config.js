@@ -1,16 +1,15 @@
 module.exports = {
-   preset: 'ts-jest',
-   testEnvironment: 'node',
-   watchPlugins: [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname",
-   ],
+   moduleFileExtensions: ['js', 'json', 'ts'],
+   rootDir: 'src',
+   testRegex: '\\.(test|spec)\\.ts$',
+   transform: {
+      '^.+\\.(t|j)s$': 'ts-jest',
+   },
+   collectCoverageFrom: ['**/*.(t|j)s'],
    coveragePathIgnorePatterns: [
-      ".d.ts", ".js",
-      "<rootDir>/src/main.ts",
-      "<rootDir>/src/tests-related/",
-      "<rootDir>/src/types/",
+      "<rootDir>/main.ts",
    ],
-   collectCoverageFrom: ["src/**/*.ts"],
-   coverageReporters: ["json-summary", "text", "lcov"],
+   coverageDirectory: '../coverage',
+   testEnvironment: 'node',
+   coverageReporters: ['json-summary', 'text', 'lcov'],
 };
