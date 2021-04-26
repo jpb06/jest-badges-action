@@ -16,4 +16,22 @@ describe("hasCoverageEvolved function", () => {
 
     expect(result).toBe(true);
   });
+
+  it("should return true if diff returns one", async () => {
+    mocked(pathExists).mockImplementationOnce(() => true);
+    mocked(exec).mockResolvedValueOnce(1);
+
+    const result = await hasCoverageEvolved();
+
+    expect(result).toBe(true);
+  });
+
+  it("should return false if diff returns zero", async () => {
+    mocked(pathExists).mockImplementationOnce(() => true);
+    mocked(exec).mockResolvedValueOnce(0);
+
+    const result = await hasCoverageEvolved();
+
+    expect(result).toBe(false);
+  });
 });
