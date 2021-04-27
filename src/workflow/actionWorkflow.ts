@@ -1,10 +1,12 @@
-import { generateBadges } from "node-jest-badges";
+import { generateBadges } from 'node-jest-badges';
 
-import { info, setFailed } from "@actions/core";
+import { info, setFailed } from '@actions/core';
 
-import { pushBadges } from "../logic/git/pushBadges";
-import { setGitConfig } from "../logic/git/setGitConfig";
-import { isJestCoverageReportAvailable } from "../logic/jest/isJestCoverageReportAvailable";
+import { pushBadges } from '../logic/git/pushBadges';
+import { setGitConfig } from '../logic/git/setGitConfig';
+import { doBadgesExist } from '../logic/jest/doBadgesExist';
+import { hasCoverageEvolved } from '../logic/jest/hasCoverageEvolved';
+import { isJestCoverageReportAvailable } from '../logic/jest/isJestCoverageReportAvailable';
 
 export const actionWorkflow = async (): Promise<void> => {
   try {
@@ -15,8 +17,16 @@ export const actionWorkflow = async (): Promise<void> => {
       );
     }
 
+    const badgesExist = await doBadgesExist();
+
     info("> Generating badges");
     await generateBadges();
+
+    const hasEvolved = await hasCoverageEvolved(badgesExist);
+    if (!hasEvolved) {
+      info("> Coverage has not evolved, no action required.");
+      return;
+    }
 
     info("> Pushing badges to the repo");
     await setGitConfig();

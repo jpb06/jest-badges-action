@@ -1,10 +1,9 @@
-import { pathExists } from 'fs-extra';
-
 import { exec } from '@actions/exec';
 
-export const hasCoverageEvolved = async (): Promise<boolean> => {
-  const folderExists = await pathExists("./coverage");
-  if (!folderExists) {
+export const hasCoverageEvolved = async (
+  badgesExist: boolean
+): Promise<boolean> => {
+  if (!badgesExist) {
     return true;
   }
 

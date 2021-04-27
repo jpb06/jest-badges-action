@@ -18,15 +18,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.pushBadges = void 0;
-const core_1 = __nccwpck_require__(5537);
 const exec_1 = __nccwpck_require__(4909);
-const hasCoverageEvolved_1 = __nccwpck_require__(4438);
 const pushBadges = () => __awaiter(void 0, void 0, void 0, function* () {
-    const hasEvolved = yield hasCoverageEvolved_1.hasCoverageEvolved();
-    if (!hasEvolved) {
-        core_1.info("> Coverage has not evolved, no action required.");
-        return;
-    }
     yield exec_1.exec("git add", ["./badges"]);
     yield exec_1.exec("git commit", ["-m", "Updating coverage badges"]);
     yield exec_1.exec("git push");
@@ -67,6 +60,39 @@ exports.setGitConfig = setGitConfig;
 
 /***/ }),
 
+/***/ 6439:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.doBadgesExist = void 0;
+const fs_extra_1 = __nccwpck_require__(4982);
+const doBadgesExist = () => __awaiter(void 0, void 0, void 0, function* () {
+    const files = [
+        "coverage-branches.svg",
+        "coverage-functions.svg",
+        "coverage-global coverage.svg",
+        "coverage-lines.svg",
+        "coverage-statements.svg",
+    ];
+    const exist = yield Promise.all(files.map((file) => fs_extra_1.pathExists(`./badges/${file}`)));
+    return exist.every((el) => el === true);
+});
+exports.doBadgesExist = doBadgesExist;
+
+
+/***/ }),
+
 /***/ 4438:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -83,11 +109,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.hasCoverageEvolved = void 0;
-const fs_extra_1 = __nccwpck_require__(4982);
 const exec_1 = __nccwpck_require__(4909);
-const hasCoverageEvolved = () => __awaiter(void 0, void 0, void 0, function* () {
-    const folderExists = yield fs_extra_1.pathExists("./coverage");
-    if (!folderExists) {
+const hasCoverageEvolved = (badgesExist) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!badgesExist) {
         return true;
     }
     const code = yield exec_1.exec("git diff", ["--quiet", "badges"], {
@@ -174,6 +198,8 @@ const node_jest_badges_1 = __nccwpck_require__(7017);
 const core_1 = __nccwpck_require__(5537);
 const pushBadges_1 = __nccwpck_require__(3474);
 const setGitConfig_1 = __nccwpck_require__(2967);
+const doBadgesExist_1 = __nccwpck_require__(6439);
+const hasCoverageEvolved_1 = __nccwpck_require__(4438);
 const isJestCoverageReportAvailable_1 = __nccwpck_require__(8949);
 const actionWorkflow = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -181,8 +207,14 @@ const actionWorkflow = () => __awaiter(void 0, void 0, void 0, function* () {
         if (!isReportAvailable) {
             return core_1.setFailed("> Coverage report is missing. Did you forget to run tests or to add `json-summary` to coverageReporters in jest config?");
         }
+        const badgesExist = yield doBadgesExist_1.doBadgesExist();
         core_1.info("> Generating badges");
         yield node_jest_badges_1.generateBadges();
+        const hasEvolved = yield hasCoverageEvolved_1.hasCoverageEvolved(badgesExist);
+        if (!hasEvolved) {
+            core_1.info("> Coverage has not evolved, no action required.");
+            return;
+        }
         core_1.info("> Pushing badges to the repo");
         yield setGitConfig_1.setGitConfig();
         yield pushBadges_1.pushBadges();

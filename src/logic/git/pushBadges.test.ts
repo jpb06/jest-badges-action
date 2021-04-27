@@ -1,30 +1,13 @@
-import { mocked } from "ts-jest/utils";
+import { exec } from '@actions/exec';
 
-import { info } from "@actions/core";
-import { exec } from "@actions/exec";
+import { pushBadges } from './pushBadges';
 
-import { pushBadges } from "./pushBadges";
-import { hasCoverageEvolved } from "../jest/hasCoverageEvolved";
-
-jest.mock("@actions/core");
 jest.mock("@actions/exec");
-jest.mock("../jest/hasCoverageEvolved");
 
 describe("pushBadges function", () => {
   beforeEach(() => jest.clearAllMocks());
 
-  it("should not push if there is no changes", async () => {
-    mocked(hasCoverageEvolved).mockResolvedValueOnce(false);
-
-    await pushBadges();
-
-    expect(exec).toHaveBeenCalledTimes(0);
-    expect(info).toHaveBeenCalledTimes(1);
-  });
-
   it("should push changes", async () => {
-    mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
-
     await pushBadges();
 
     expect(exec).toHaveBeenCalledTimes(3);

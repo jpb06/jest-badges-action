@@ -1,21 +1,25 @@
-import { generateBadges } from "node-jest-badges";
-import { mocked } from "ts-jest/utils";
+import { generateBadges } from 'node-jest-badges';
+import { mocked } from 'ts-jest/utils';
 
-import { info, setFailed } from "@actions/core";
+import { info, setFailed } from '@actions/core';
 
-import { pushBadges } from "../logic/git/pushBadges";
-import { setGitConfig } from "../logic/git/setGitConfig";
-import { isJestCoverageReportAvailable } from "../logic/jest/isJestCoverageReportAvailable";
-import { actionWorkflow } from "./actionWorkflow";
+import { pushBadges } from '../logic/git/pushBadges';
+import { setGitConfig } from '../logic/git/setGitConfig';
+import { doBadgesExist } from '../logic/jest/doBadgesExist';
+import { hasCoverageEvolved } from '../logic/jest/hasCoverageEvolved';
+import { isJestCoverageReportAvailable } from '../logic/jest/isJestCoverageReportAvailable';
+import { actionWorkflow } from './actionWorkflow';
 
 jest.mock("@actions/core");
 jest.mock("node-jest-badges");
 jest.mock("../logic/git/pushBadges");
 jest.mock("../logic/git/setGitConfig");
 jest.mock("../logic/jest/isJestCoverageReportAvailable");
+jest.mock("../logic/jest/doBadgesExist");
+jest.mock("../logic/jest/hasCoverageEvolved");
 
 describe("actionWorkflow function", () => {
-  afterEach(() => jest.resetAllMocks());
+  afterEach(() => jest.clearAllMocks());
 
   it("should fail the task if there is no coverage report", async () => {
     mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(false);
@@ -32,8 +36,25 @@ describe("actionWorkflow function", () => {
     );
   });
 
+  it("should do nothing if coverage has not evolved", async () => {
+    mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    mocked(doBadgesExist).mockResolvedValueOnce(true);
+    mocked(hasCoverageEvolved).mockResolvedValueOnce(false);
+
+    await actionWorkflow();
+
+    expect(generateBadges).toHaveBeenCalledTimes(1);
+    expect(setGitConfig).toHaveBeenCalledTimes(0);
+    expect(pushBadges).toHaveBeenCalledTimes(0);
+
+    expect(info).toHaveBeenCalledTimes(2);
+    expect(setFailed).toHaveBeenCalledTimes(0);
+  });
+
   it("should generate badges and push them", async () => {
     mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    mocked(doBadgesExist).mockResolvedValueOnce(true);
+    mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
 
     await actionWorkflow();
 
