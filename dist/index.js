@@ -60,6 +60,60 @@ exports.setGitConfig = setGitConfig;
 
 /***/ }),
 
+/***/ 4840:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getCurrentBranch = void 0;
+const fs_extra_1 = __nccwpck_require__(4982);
+const getCurrentBranch = () => {
+    var _a;
+    let event;
+    try {
+        event = JSON.parse(fs_extra_1.readFileSync(process.env.GITHUB_EVENT_PATH, {
+            encoding: 'utf8',
+        }));
+    }
+    catch (err) {
+        return undefined;
+    }
+    const currentBranch = (_a = event.ref) === null || _a === void 0 ? void 0 : _a.split('/').slice(2).join('/');
+    return currentBranch;
+};
+exports.getCurrentBranch = getCurrentBranch;
+
+
+/***/ }),
+
+/***/ 8190:
+/***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.isBranchValidForBadgesGeneration = void 0;
+const core_1 = __nccwpck_require__(5537);
+const getCurrentBranch_1 = __nccwpck_require__(4840);
+const isBranchValidForBadgesGeneration = () => {
+    const currentBranch = getCurrentBranch_1.getCurrentBranch();
+    if (!currentBranch) {
+        core_1.error(`> Unable to get current branch from github event.`);
+        return false;
+    }
+    const branches = core_1.getInput('branches').split(',');
+    if (branches.length === 1 && branches[0].length === 0) {
+        core_1.info(`> No branches specified, defaulting to master`);
+        branches.push('master');
+    }
+    return branches.includes(currentBranch);
+};
+exports.isBranchValidForBadgesGeneration = isBranchValidForBadgesGeneration;
+
+
+/***/ }),
+
 /***/ 6439:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -198,24 +252,28 @@ const node_jest_badges_1 = __nccwpck_require__(7017);
 const core_1 = __nccwpck_require__(5537);
 const pushBadges_1 = __nccwpck_require__(3474);
 const setGitConfig_1 = __nccwpck_require__(2967);
+const isBranchValidForBadgesGeneration_1 = __nccwpck_require__(8190);
 const doBadgesExist_1 = __nccwpck_require__(6439);
 const hasCoverageEvolved_1 = __nccwpck_require__(4438);
 const isJestCoverageReportAvailable_1 = __nccwpck_require__(8949);
 const actionWorkflow = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const isBranchValid = isBranchValidForBadgesGeneration_1.isBranchValidForBadgesGeneration();
+        if (!isBranchValid) {
+            return core_1.info('> Current branch does not belong to the branches allowed for badges generation, task dropped.');
+        }
         const isReportAvailable = yield isJestCoverageReportAvailable_1.isJestCoverageReportAvailable();
         if (!isReportAvailable) {
-            return core_1.setFailed("> Coverage report is missing. Did you forget to run tests or to add `json-summary` to coverageReporters in jest config?");
+            return core_1.setFailed('> Coverage report is missing. Did you forget to run tests or to add `json-summary` to coverageReporters in jest config?');
         }
         const badgesExist = yield doBadgesExist_1.doBadgesExist();
-        core_1.info("> Generating badges");
+        core_1.info('> Generating badges');
         yield node_jest_badges_1.generateBadges();
         const hasEvolved = yield hasCoverageEvolved_1.hasCoverageEvolved(badgesExist);
         if (!hasEvolved) {
-            core_1.info("> Coverage has not evolved, no action required.");
-            return;
+            return core_1.info('> Coverage has not evolved, no action required.');
         }
-        core_1.info("> Pushing badges to the repo");
+        core_1.info('> Pushing badges to the repo');
         yield setGitConfig_1.setGitConfig();
         yield pushBadges_1.pushBadges();
     }
