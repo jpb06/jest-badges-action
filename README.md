@@ -22,6 +22,14 @@ module.exports = {
 
 You also need to run jest before calling this action in your ci workflow. See `usage` for an example.
 
+## :zap: Inputs
+
+### :diamonds: `branches`
+
+Branches on which the badges should be generated, separated by commas.
+
+> Default value: **master**
+
 ## :zap: Usage
 
 Let's first define an npm script to run jest in package.json, specifying the coverage option to generate a coverage report:
@@ -52,5 +60,10 @@ jobs:
       run: yarn test:ci
     [...]
     - name: Generating coverage badges
-    - uses: actions/jest-badges-action@v1.2.6
+      uses: actions/jest-badges-action@v1.2.7
+        with:
+          branches: master,preprod,staging
+
 ```
+
+The badges will be generated when the action runs on the master, preprod or staging branch.

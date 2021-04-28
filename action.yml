@@ -1,9 +1,14 @@
-name: "Jest badges generation action"
-description: "Action generating jest coverage badges and pushing them to the repo"
+name: 'Jest badges generation action'
+description: 'Action generating jest coverage badges and pushing them to the repo'
+
+inputs:
+  branches:
+    description: 'Branches on which the badges should be generated. Commas separated.'
+    default: 'master'
 
 runs:
-  using: "node12"
-  main: "dist/index.js"
+  using: 'node12'
+  main: 'dist/index.js'
 
 branding:
   icon: check-square
