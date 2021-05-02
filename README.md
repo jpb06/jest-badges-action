@@ -60,7 +60,7 @@ jobs:
       run: yarn test:ci
     [...]
     - name: Generating coverage badges
-      uses: actions/jest-badges-action@v1.3.0
+      uses: actions/jest-badges-action@v1.3.1
         with:
           branches: master,preprod,staging
 
