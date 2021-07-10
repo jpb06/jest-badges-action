@@ -24,7 +24,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: "14.x"
+          node-version: '14.x'
 
       - name: Setting yarn version
         run: yarn policies set-version 1.22.10
@@ -45,6 +45,6 @@ jobs:
         uses: ./
 
       - name: Bump package version
-        uses: jpb06/bump-package@v2.1.1
+        uses: jpb06/bump-package@v2.3.0
         with:
           create-tag: true
