@@ -1,5 +1,6 @@
 # jest-badges-action
 
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/jpb06/jest-badges-action)
 ![Code quality](https://img.shields.io/codefactor/grade/github/jpb06/jest-badges-action?logo=codefactor)
 ![Total coverage](./badges/coverage-global%20coverage.svg)
 ![Github workflow](https://img.shields.io/github/workflow/status/jpb06/jest-badges-action/checks?label=last%20workflow&logo=github-actions)
