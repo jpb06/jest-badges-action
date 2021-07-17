@@ -3,10 +3,10 @@ import { mocked } from 'ts-jest/utils';
 
 import { isJestCoverageReportAvailable } from './isJestCoverageReportAvailable';
 
-jest.mock("fs-extra");
+jest.mock('fs-extra');
 
-describe("isJestCoverageReportAvailable function", () => {
-  it("should return false if coverage report does not exist", async () => {
+describe('isJestCoverageReportAvailable function', () => {
+  it('should return false if coverage report does not exist', async () => {
     mocked(pathExists).mockImplementationOnce(() => false);
 
     const result = await isJestCoverageReportAvailable();
@@ -14,7 +14,7 @@ describe("isJestCoverageReportAvailable function", () => {
     expect(result).toBe(false);
   });
 
-  it("should return false if coverage report is missing", async () => {
+  it('should return false if coverage report is missing', async () => {
     mocked(pathExists).mockImplementationOnce(() => true);
     mocked(readJson).mockImplementationOnce(() => undefined);
 
@@ -23,7 +23,7 @@ describe("isJestCoverageReportAvailable function", () => {
     expect(result).toBe(false);
   });
 
-  it("should return false if coverage report is empty", async () => {
+  it('should return false if coverage report is empty', async () => {
     mocked(pathExists).mockImplementationOnce(() => true);
     mocked(readJson).mockImplementationOnce(() => ({}));
 
@@ -32,7 +32,7 @@ describe("isJestCoverageReportAvailable function", () => {
     expect(result).toBe(false);
   });
 
-  it("should return false if coverage report has missing details", async () => {
+  it('should return false if coverage report has missing details', async () => {
     mocked(pathExists).mockImplementationOnce(() => true);
     mocked(readJson).mockImplementationOnce(() => ({
       total: {
@@ -45,7 +45,7 @@ describe("isJestCoverageReportAvailable function", () => {
     expect(result).toBe(false);
   });
 
-  it("should return true", async () => {
+  it('should return true', async () => {
     mocked(pathExists).mockImplementationOnce(() => true);
     mocked(readJson).mockImplementationOnce(() => ({
       total: {

@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "cleanDist": "rimraf ./dist && rimraf ./lib",
-    "build": "yarn cleanDist && tsc --project tsconfig.prod.json && ncc build",
+    "build": "yarn cleanDist && tsc --project tsconfig.prod.json && ncc build --minify",
     "lint": "eslint src/**/*.ts",
     "test": "jest",
     "test:dev": "jest --watchAll --coverage",
@@ -20,12 +20,12 @@
     "@actions/exec": "^1.1.0",
     "@actions/github": "^5.0.0",
     "fs-extra": "^10.0.0",
-    "node-jest-badges": "^1.1.0"
+    "node-jest-badges": "^1.2.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-typescript": "^7.14.5",
     "@jest/types": "^27.0.6",
-    "@octokit/types": "^6.18.1",
+    "@octokit/types": "^6.19.0",
     "@types/babel__core": "^7.1.15",
     "@types/fs-extra": "^9.0.12",
     "@types/graceful-fs": "^4.1.5",
@@ -34,9 +34,9 @@
     "@types/normalize-package-data": "^2.4.1",
     "@types/prettier": "^2.3.2",
     "@types/stack-utils": "^2.0.1",
-    "@typescript-eslint/eslint-plugin": "^4.28.2",
-    "@typescript-eslint/parser": "^4.28.2",
-    "@vercel/ncc": "^0.28.6",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
+    "@vercel/ncc": "^0.29.0",
     "eslint": "^7.30.0",
     "eslint-plugin-jest": "^24.3.6",
     "jest": "^27.0.6",
