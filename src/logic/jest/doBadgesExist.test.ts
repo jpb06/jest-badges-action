@@ -3,10 +3,10 @@ import { mocked } from 'ts-jest/utils';
 
 import { doBadgesExist } from './doBadgesExist';
 
-jest.mock("fs-extra");
+jest.mock('fs-extra');
 
-describe("doBadgesExist function", () => {
-  it("should return false if one file does not exist", async () => {
+describe('doBadgesExist function', () => {
+  it('should return false if one file does not exist', async () => {
     mocked(pathExists)
       .mockImplementationOnce(() => false)
       .mockImplementationOnce(() => true)
@@ -19,7 +19,7 @@ describe("doBadgesExist function", () => {
     expect(result).toBe(false);
   });
 
-  it("should return true if all files exist", async () => {
+  it('should return true if all files exist', async () => {
     mocked(pathExists)
       .mockImplementationOnce(() => true)
       .mockImplementationOnce(() => true)

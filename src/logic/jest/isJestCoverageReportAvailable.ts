@@ -8,7 +8,7 @@ interface JestCoverage {
 }
 
 export const isJestCoverageReportAvailable = async (): Promise<boolean> => {
-  const coverageSummaryPath = "./coverage/coverage-summary.json";
+  const coverageSummaryPath = './coverage/coverage-summary.json';
 
   const coverageExists = await pathExists(coverageSummaryPath);
   if (!coverageExists) {
