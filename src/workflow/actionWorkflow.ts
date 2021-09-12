@@ -39,6 +39,10 @@ export const actionWorkflow = async (): Promise<void> => {
     await setGitConfig();
     await pushBadges();
   } catch (error) {
-    return setFailed(`Oh no! An error occured: ${error.message}`);
+    if (error instanceof Error) {
+      return setFailed(`Oh no! An error occured: ${error.message}`);
+    }
+
+    return setFailed(`Oh no! An unknown error occured`);
   }
 };
