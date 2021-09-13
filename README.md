@@ -9,7 +9,7 @@
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=coverage)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
 ![Total coverage](./badges/coverage-global%20coverage.svg)
-![Github workflow](https://img.shields.io/github/workflow/status/jpb06/jest-badges-action/checks?label=last%20workflow&logo=github-actions)
+![Github workflow](https://img.shields.io/github/workflow/status/jpb06/jest-badges-action/Main%20workflow?label=last%20workflow&logo=github-actions)
 ![Last commit](https://img.shields.io/github/last-commit/jpb06/jest-badges-action?logo=git)
 ![Commits activity](https://img.shields.io/github/commit-activity/m/jpb06/jest-badges-action?logo=github)
 
