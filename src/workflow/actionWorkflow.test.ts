@@ -1,7 +1,6 @@
+import { info, setFailed } from '@actions/core';
 import { generateBadges } from 'node-jest-badges';
 import { mocked } from 'ts-jest/utils';
-
-import { info, setFailed } from '@actions/core';
 
 import { pushBadges } from '../logic/git/pushBadges';
 import { setGitConfig } from '../logic/git/setGitConfig';
@@ -36,7 +35,7 @@ describe('actionWorkflow function', () => {
 
     expect(info).toHaveBeenCalledTimes(1);
     expect(info).toHaveBeenCalledWith(
-      '> Current branch does not belong to the branches allowed for badges generation, task dropped.'
+      '> Current branch does not belong to the branches allowed for badges generation, task dropped.',
     );
   });
 
@@ -52,7 +51,7 @@ describe('actionWorkflow function', () => {
 
     expect(setFailed).toHaveBeenCalledTimes(1);
     expect(setFailed).toHaveBeenCalledWith(
-      '> Coverage report is missing. Did you forget to run tests or to add `json-summary` to coverageReporters in jest config?'
+      '> Coverage report is missing. Did you forget to run tests or to add `json-summary` to coverageReporters in jest config?',
     );
   });
 
@@ -91,7 +90,7 @@ describe('actionWorkflow function', () => {
   it('should fail the task if there is errors', async () => {
     mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
     mocked(isJestCoverageReportAvailable).mockRejectedValueOnce(
-      new Error('Big bad error')
+      new Error('Big bad error'),
     );
 
     await actionWorkflow();
@@ -102,7 +101,23 @@ describe('actionWorkflow function', () => {
 
     expect(setFailed).toHaveBeenCalledTimes(1);
     expect(setFailed).toHaveBeenCalledWith(
-      'Oh no! An error occured: Big bad error'
+      'Oh no! An error occured: Big bad error',
     );
+  });
+
+  it('should display a generic error when no message is available', async () => {
+    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    mocked(isJestCoverageReportAvailable).mockRejectedValueOnce(
+      'Big bad error',
+    );
+
+    await actionWorkflow();
+
+    expect(generateBadges).toHaveBeenCalledTimes(0);
+    expect(setGitConfig).toHaveBeenCalledTimes(0);
+    expect(pushBadges).toHaveBeenCalledTimes(0);
+
+    expect(setFailed).toHaveBeenCalledTimes(1);
+    expect(setFailed).toHaveBeenCalledWith(`Oh no! An unknown error occured`);
   });
 });

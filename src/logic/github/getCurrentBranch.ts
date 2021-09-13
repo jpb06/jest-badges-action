@@ -8,7 +8,7 @@ export const getCurrentBranch = (): string | undefined => {
     event = JSON.parse(
       readFileSync(process.env.GITHUB_EVENT_PATH as string, {
         encoding: 'utf8',
-      })
+      }),
     );
   } catch (err) {
     return undefined;

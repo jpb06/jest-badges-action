@@ -1,6 +1,5 @@
-import { mocked } from 'ts-jest/utils';
-
 import { exec } from '@actions/exec';
+import { mocked } from 'ts-jest/utils';
 
 import { hasCoverageEvolved } from './hasCoverageEvolved';
 

@@ -1,3 +1,4 @@
+import { getInput } from '@actions/core';
 import { pathExists, readJson } from 'fs-extra';
 import { CoverageSummary, FileCoverageTotal } from 'node-jest-badges';
 
@@ -8,7 +9,7 @@ interface JestCoverage {
 }
 
 export const isJestCoverageReportAvailable = async (): Promise<boolean> => {
-  const coverageSummaryPath = './coverage/coverage-summary.json';
+  const coverageSummaryPath = getInput('coverage-summary-path');
 
   const coverageExists = await pathExists(coverageSummaryPath);
   if (!coverageExists) {

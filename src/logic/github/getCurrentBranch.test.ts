@@ -20,7 +20,7 @@ describe('getCurrentBranch function', () => {
     mocked(readFileSync).mockReturnValueOnce(
       JSON.stringify({
         ref: undefined,
-      })
+      }),
     );
 
     const result = getCurrentBranch();
@@ -32,7 +32,7 @@ describe('getCurrentBranch function', () => {
     mocked(readFileSync).mockReturnValueOnce(
       JSON.stringify({
         ref: 'refs/heads/master',
-      })
+      }),
     );
 
     const result = getCurrentBranch();
