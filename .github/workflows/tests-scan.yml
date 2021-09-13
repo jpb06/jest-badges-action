@@ -1,12 +1,20 @@
-name: checks
-on: [push]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+name: Main workflow
 jobs:
-  install:
+  tests:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -24,7 +32,8 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: "14.x"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Setting yarn version
         run: yarn policies set-version 1.22.10
@@ -32,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --prefer-offline
 
-      - name: Linter
+      - name: Linting
         run: yarn lint
 
       - name: Tests
@@ -41,10 +50,8 @@ jobs:
       - name: Build
         run: yarn build
 
-      - name: Generate badges
-        uses: ./
-
-      - name: Bump package version
-        uses: jpb06/bump-package@v2.3.0
-        with:
-          create-tag: true
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
