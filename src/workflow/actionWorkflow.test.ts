@@ -105,4 +105,18 @@ describe('actionWorkflow function', () => {
       'Oh no! An error occured: Big bad error'
     );
   });
+
+  it("should display a generic error when no message is available", async () => {
+    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    mocked(isJestCoverageReportAvailable).mockRejectedValueOnce('Big bad error');
+
+    await actionWorkflow();
+
+    expect(generateBadges).toHaveBeenCalledTimes(0);
+    expect(setGitConfig).toHaveBeenCalledTimes(0);
+    expect(pushBadges).toHaveBeenCalledTimes(0);
+
+    expect(setFailed).toHaveBeenCalledTimes(1);
+    expect(setFailed).toHaveBeenCalledWith(`Oh no! An unknown error occured`);
+  });
 });
