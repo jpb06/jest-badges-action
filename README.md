@@ -31,6 +31,12 @@ Branches on which the badges should be generated, separated by commas.
 
 > Default value: **master**
 
+### :diamonds: `coverage-summary-path`
+
+Jest coverage summary path (json-summary). Defining this may be useful if you need to run this action on a monorepo.
+
+> Default value: **./coverage/coverage-summary.json**
+
 ## :zap: Usage
 
 Let's first define an npm script to run jest in package.json, specifying the coverage option to generate a coverage report:
@@ -68,3 +74,15 @@ jobs:
 ```
 
 The badges will be generated when the action runs on the master, preprod or staging branch.
+
+### :diamonds: Using a custom jest coverage summary file path
+
+In case you need to define a custom path for the coverage summary file, you can use the `coverage-summary-path` input like so:
+
+```yaml
+    [...]
+    - name: Generating coverage badges
+      uses: actions/jest-badges-action@latest
+        with:
+          coverage-summary-path: ./my-module/coverage/coverage-summary.json
+```
