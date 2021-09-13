@@ -1,6 +1,5 @@
-import { mocked } from 'ts-jest/utils';
-
 import { error, getInput, info } from '@actions/core';
+import { mocked } from 'ts-jest/utils';
 
 import { getCurrentBranch } from '../github/getCurrentBranch';
 import { isBranchValidForBadgesGeneration } from './isBranchValidForBadgesGeneration';

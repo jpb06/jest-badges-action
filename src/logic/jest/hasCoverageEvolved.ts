@@ -1,7 +1,7 @@
 import { exec } from '@actions/exec';
 
 export const hasCoverageEvolved = async (
-  badgesExist: boolean
+  badgesExist: boolean,
 ): Promise<boolean> => {
   if (!badgesExist) {
     return true;

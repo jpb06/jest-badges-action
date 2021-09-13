@@ -1,6 +1,5 @@
-import { generateBadges } from 'node-jest-badges';
-
 import { info, setFailed } from '@actions/core';
+import { generateBadges } from 'node-jest-badges';
 
 import { pushBadges } from '../logic/git/pushBadges';
 import { setGitConfig } from '../logic/git/setGitConfig';
@@ -14,14 +13,14 @@ export const actionWorkflow = async (): Promise<void> => {
     const isBranchValid = isBranchValidForBadgesGeneration();
     if (!isBranchValid) {
       return info(
-        '> Current branch does not belong to the branches allowed for badges generation, task dropped.'
+        '> Current branch does not belong to the branches allowed for badges generation, task dropped.',
       );
     }
 
     const isReportAvailable = await isJestCoverageReportAvailable();
     if (!isReportAvailable) {
       return setFailed(
-        '> Coverage report is missing. Did you forget to run tests or to add `json-summary` to coverageReporters in jest config?'
+        '> Coverage report is missing. Did you forget to run tests or to add `json-summary` to coverageReporters in jest config?',
       );
     }
 

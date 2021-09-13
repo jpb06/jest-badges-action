@@ -10,7 +10,7 @@ export const doBadgesExist = async (): Promise<boolean> => {
   ];
 
   const exist = await Promise.all(
-    files.map((file) => pathExists(`./badges/${file}`))
+    files.map((file) => pathExists(`./badges/${file}`)),
   );
 
   return exist.every((el) => el === true);
