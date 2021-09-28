@@ -4,7 +4,7 @@ on:
     branches:
       - master
 jobs:
-  install:
+  bump-package:
     name: Install dependencies
     runs-on: ubuntu-latest
     timeout-minutes: 10
