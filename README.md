@@ -73,7 +73,7 @@ jobs:
       run: yarn test:ci
     [...]
     - name: Generating coverage badges
-      uses: actions/jest-badges-action@latest
+      uses: jpb06/jest-badges-action@latest
         with:
           branches: master,preprod,staging
 
@@ -88,7 +88,7 @@ In case you need to define a custom path for the coverage summary file, you can 
 ```yaml
     [...]
     - name: Generating coverage badges
-      uses: actions/jest-badges-action@latest
+      uses: jpb06/jest-badges-action@latest
         with:
           coverage-summary-path: ./my-module/coverage/coverage-summary.json
 ```
