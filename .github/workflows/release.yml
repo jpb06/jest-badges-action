@@ -14,6 +14,6 @@ jobs:
       - name: Checkout latest
         run: git checkout latest
       - name: Rebase latest on master
-        run: git merge master
+        run: git merge origin/master
       - name: Push latest
         run: git push origin latest
