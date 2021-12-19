@@ -7,7 +7,7 @@ export const hasCoverageEvolved = async (
     return true;
   }
 
-  const code = await exec('git diff', ['--quiet', 'badges'], {
+  const code = await exec('git diff', ['--quiet', './badges/*'], {
     ignoreReturnCode: true,
   });
 
