@@ -1,17 +1,19 @@
 /** @type {import('@jest/types').Config.InitialOptions} */
 
 module.exports = {
-   moduleFileExtensions: ['js', 'json', 'ts'],
-   rootDir: 'src',
-   testRegex: '\\.(test|spec)\\.ts$',
-   transform: {
-      '^.+\\.(t|j)s$': 'ts-jest',
-   },
-   collectCoverageFrom: ['**/*.(t|j)s'],
-   coveragePathIgnorePatterns: [
-      "<rootDir>/main.ts",
-   ],
-   coverageDirectory: '../coverage',
-   testEnvironment: 'node',
-   coverageReporters: ['json-summary', 'text', 'lcov'],
+  logHeapUsage: true,
+  transform: {
+    '^.+\\.ts$': ['babel-jest', { presets: [['@babel/preset-env', { targets: { node: 'current' } }], '@babel/preset-typescript'] }],
+  },
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  watchPlugins: [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname",
+  ],
+  collectCoverageFrom: ['src/**/*.ts'],
+  coveragePathIgnorePatterns: [
+    "<rootDir>/main.ts",
+  ],
+  coverageDirectory: '../coverage',
+  coverageReporters: ['json-summary', 'text', 'lcov'],
 };

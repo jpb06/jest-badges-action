@@ -1,6 +1,6 @@
 import { info, setFailed } from '@actions/core';
+import { mocked } from 'jest-mock';
 import { generateBadges } from 'node-jest-badges';
-import { mocked } from 'ts-jest/utils';
 
 import { pushBadges } from '../logic/git/pushBadges';
 import { setGitConfig } from '../logic/git/setGitConfig';

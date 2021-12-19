@@ -1,5 +1,5 @@
 import { pathExists } from 'fs-extra';
-import { mocked } from 'ts-jest/utils';
+import { mocked } from 'jest-mock';
 
 import { doBadgesExist } from './doBadgesExist';
 
