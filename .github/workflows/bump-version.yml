@@ -47,4 +47,4 @@ jobs:
         uses: ./
 
       - name: Bump package version
-        uses: jpb06/bump-package@v2.3.0
+        uses: jpb06/bump-package@v2.4.0
