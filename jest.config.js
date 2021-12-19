@@ -6,14 +6,18 @@ module.exports = {
     '^.+\\.ts$': ['babel-jest', { presets: [['@babel/preset-env', { targets: { node: 'current' } }], '@babel/preset-typescript'] }],
   },
   moduleFileExtensions: ['js', 'json', 'ts'],
+  rootDir: 'src',
   watchPlugins: [
     "jest-watch-typeahead/filename",
     "jest-watch-typeahead/testname",
   ],
-  collectCoverageFrom: ['src/**/*.ts'],
+  collectCoverage: true,
+  collectCoverageFrom: ['<rootDir>/**/*.ts'],
   coveragePathIgnorePatterns: [
     "<rootDir>/main.ts",
+    "<rootDir>/types/"
   ],
-  coverageDirectory: '../coverage',
+  coverageDirectory: './../coverage',
+  testEnvironment: 'node',
   coverageReporters: ['json-summary', 'text', 'lcov'],
 };
