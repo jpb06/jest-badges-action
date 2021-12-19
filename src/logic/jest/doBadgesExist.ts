@@ -4,7 +4,7 @@ export const doBadgesExist = async (): Promise<boolean> => {
   const files = [
     'coverage-branches.svg',
     'coverage-functions.svg',
-    'coverage-global coverage.svg',
+    'coverage-jest coverage.svg',
     'coverage-lines.svg',
     'coverage-statements.svg',
   ];
