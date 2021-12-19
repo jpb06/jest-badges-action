@@ -12,7 +12,7 @@
     "lint": "eslint src/**/*.ts",
     "test": "jest",
     "test:dev": "jest --watchAll --coverage",
-    "test:ci": "jest --ci --runInBand --coverage",
+    "test:ci": "jest --ci --coverage",
     "badges": "generateBadges"
   },
   "dependencies": {
