@@ -1,7 +1,7 @@
 {
   "name": "jest-badges-action",
   "description": "Generates coverage badges and pushes them to the repo",
-  "version": "1.8.7",
+  "version": "1.8.8",
   "main": "lib/main.js",
   "repository": "https://github.com/jpb06/jest-badges-action.git",
   "author": "jpb06 <jpb.06@outlook.com>",
