@@ -1,10 +1,11 @@
 name: Updating latest branch
+
 on:
   release:
     types: [published]
+
 jobs:
   update-latest:
-    name: Rebase latest on master
     runs-on: ubuntu-latest
     steps:
       - name: Cancel Previous Runs
