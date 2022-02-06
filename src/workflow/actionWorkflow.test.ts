@@ -35,7 +35,7 @@ describe('actionWorkflow function', () => {
 
     expect(info).toHaveBeenCalledTimes(1);
     expect(info).toHaveBeenCalledWith(
-      '> Current branch does not belong to the branches allowed for badges generation, task dropped.',
+      '🔶 Current branch does not belong to the branches allowed for badges generation, task dropped.',
     );
   });
 
@@ -51,7 +51,7 @@ describe('actionWorkflow function', () => {
 
     expect(setFailed).toHaveBeenCalledTimes(1);
     expect(setFailed).toHaveBeenCalledWith(
-      '> Coverage report is missing. Did you forget to run tests or to add `json-summary` to coverageReporters in jest config?',
+      '🔶 Coverage report is missing. Did you forget to run tests or to add `json-summary` to coverageReporters in jest config?',
     );
   });
 
@@ -101,7 +101,7 @@ describe('actionWorkflow function', () => {
 
     expect(setFailed).toHaveBeenCalledTimes(1);
     expect(setFailed).toHaveBeenCalledWith(
-      'Oh no! An error occured: Big bad error',
+      '🔶 Oh no! An error occured: Big bad error',
     );
   });
 
@@ -118,6 +118,8 @@ describe('actionWorkflow function', () => {
     expect(pushBadges).toHaveBeenCalledTimes(0);
 
     expect(setFailed).toHaveBeenCalledTimes(1);
-    expect(setFailed).toHaveBeenCalledWith(`Oh no! An unknown error occured`);
+    expect(setFailed).toHaveBeenCalledWith(
+      `🔶 Oh no! An unknown error occured`,
+    );
   });
 });
