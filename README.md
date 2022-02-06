@@ -1,18 +1,19 @@
 # jest-badges-action
 
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/jpb06/jest-badges-action)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
+![Github workflow](https://img.shields.io/github/workflow/status/jpb06/jest-badges-action/Tests?label=last%20workflow&logo=github-actions)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=security_rating)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=bugs)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=code_smells)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=coverage)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
 ![Total coverage](./badges/coverage-jest%20coverage.svg)
-![Github workflow](https://img.shields.io/github/workflow/status/jpb06/jest-badges-action/Main%20workflow?label=last%20workflow&logo=github-actions)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=code_smells)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=bugs)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
 ![Last commit](https://img.shields.io/github/last-commit/jpb06/jest-badges-action?logo=git)
 
 ## :zap: Description
