@@ -1,4 +1,4 @@
-name: Coverage badges generation & version bump
+name: Updating latest branch
 on:
   release:
     types: [published]
@@ -7,6 +7,11 @@ jobs:
     name: Rebase latest on master
     runs-on: ubuntu-latest
     steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
       - name: Checkout repository
         uses: actions/checkout@v2
         with:

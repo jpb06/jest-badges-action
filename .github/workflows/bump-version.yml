@@ -9,6 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
       - name: Check out repository code
         uses: actions/checkout@v2
 
@@ -47,4 +52,4 @@ jobs:
         uses: ./
 
       - name: Bump package version
-        uses: jpb06/bump-package@v2.4.2
+        uses: jpb06/bump-package@v2.4.4
