@@ -56,11 +56,8 @@ jobs:
         id: bumping-version
         uses: jpb06/bump-package@v2.5.0
 
-      - name: Bump performed?
-        run: echo "bump-performed ${{ steps.bumping-version.outputs.bump-performed }}"
-
       - name: Publish package
-        if: steps.bumping-version.outputs.bump-performed == 'True'
+        if: steps.bumping-version.outputs.bump-performed == 'true'
         run: |
           cd dist
           yarn publish --non-interactive
