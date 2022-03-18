@@ -55,11 +55,3 @@ jobs:
       - name: Bump package version
         id: bumping-version
         uses: jpb06/bump-package@v2.5.0
-
-      - name: Publish package
-        if: steps.bumping-version.outputs.bump-performed == 'true'
-        run: |
-          cd dist
-          yarn publish --non-interactive
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
