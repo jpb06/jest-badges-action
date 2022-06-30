@@ -1,4 +1,4 @@
-import { info, setFailed } from '@actions/core';
+import { getInput, info, setFailed } from '@actions/core';
 import { mocked } from 'jest-mock';
 import { generateBadges } from 'node-jest-badges';
 
@@ -80,6 +80,43 @@ describe('actionWorkflow function', () => {
     await actionWorkflow();
 
     expect(generateBadges).toHaveBeenCalledTimes(1);
+    expect(setGitConfig).toHaveBeenCalledTimes(1);
+    expect(pushBadges).toHaveBeenCalledTimes(1);
+
+    expect(info).toHaveBeenCalledTimes(2);
+    expect(setFailed).toHaveBeenCalledTimes(0);
+  });
+
+  it('should generate badges from the default summary path', async () => {
+    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    mocked(doBadgesExist).mockResolvedValueOnce(true);
+    mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
+    mocked(getInput).mockReturnValueOnce('');
+
+    await actionWorkflow();
+
+    expect(generateBadges).toHaveBeenCalledTimes(1);
+    expect(generateBadges).toHaveBeenCalledWith(undefined);
+    expect(setGitConfig).toHaveBeenCalledTimes(1);
+    expect(pushBadges).toHaveBeenCalledTimes(1);
+
+    expect(info).toHaveBeenCalledTimes(2);
+    expect(setFailed).toHaveBeenCalledTimes(0);
+  });
+
+  it('should generate badges from a custom summary path', async () => {
+    const path = './myModule/coverage-summary.json';
+    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    mocked(doBadgesExist).mockResolvedValueOnce(true);
+    mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
+    mocked(getInput).mockReturnValueOnce(path);
+
+    await actionWorkflow();
+
+    expect(generateBadges).toHaveBeenCalledTimes(1);
+    expect(generateBadges).toHaveBeenCalledWith(path);
     expect(setGitConfig).toHaveBeenCalledTimes(1);
     expect(pushBadges).toHaveBeenCalledTimes(1);
 
