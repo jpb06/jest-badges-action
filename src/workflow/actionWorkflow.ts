@@ -1,4 +1,4 @@
-import { info, setFailed } from '@actions/core';
+import { getInput, info, setFailed } from '@actions/core';
 import { generateBadges } from 'node-jest-badges';
 
 import { pushBadges } from '../logic/git/pushBadges';
@@ -26,8 +26,15 @@ export const actionWorkflow = async (): Promise<void> => {
 
     const badgesExist = await doBadgesExist();
 
-    info('🔶 Generating badges');
-    await generateBadges();
+    const summaryPathInput = getInput('coverage-summary-path');
+    const summaryPath = summaryPathInput === '' ? undefined : summaryPathInput;
+
+    info(
+      `🔶 Generating badges from ${
+        summaryPath ? summaryPath : 'default coverage summary path'
+      }`,
+    );
+    await generateBadges(summaryPath);
 
     const hasEvolved = await hasCoverageEvolved(badgesExist);
     if (!hasEvolved) {
