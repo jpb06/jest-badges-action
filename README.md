@@ -16,6 +16,14 @@
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
 ![Last commit](https://img.shields.io/github/last-commit/jpb06/jest-badges-action?logo=git)
 
+Generating coverage badges and pushing them to the repository.
+
+<!-- readme-package-icons start -->
+
+<p align="left"><a href="https://docs.github.com/en/actions" target="_blank"><img height="70" src="https://raw.githubusercontent.com/jpb06/readme-package-icons/main/icons/github-actions.svg" /></a>&nbsp;<a href="https://www.typescriptlang.org/docs/" target="_blank"><img height="70" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" /></a>&nbsp;<a href="https://nodejs.org/en/docs/" target="_blank"><img height="70" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" /></a>&nbsp;<a href="https://yarnpkg.com/api/" target="_blank"><img height="70" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/yarn/yarn-original.svg" /></a>&nbsp;<a href="https://eslint.org/docs/latest/" target="_blank"><img height="70" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/eslint/eslint-original.svg" /></a>&nbsp;<a href="https://jestjs.io/docs/getting-started" target="_blank"><img height="70" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg" /></a>&nbsp;<a href="https://prettier.io/docs/en/index.html" target="_blank"><img height="70" src="https://raw.githubusercontent.com/jpb06/readme-package-icons/main/icons/prettier.png" /></a>&nbsp;<a href="https://swc.rs/docs/getting-started" target="_blank"><img height="70" src="https://raw.githubusercontent.com/jpb06/readme-package-icons/main/icons/swc.svg" /></a></p>
+
+<!-- readme-package-icons end -->
+
 ## ⚡ Description
 
 This github action generates testing coverage badges using jest and pushes them back to the repo.
@@ -38,7 +46,7 @@ You also need to run jest before calling this action in your ci workflow. See `u
 
 Branches on which the badges should be generated, separated by commas.
 
-> Default value: **master**
+> Default value: **master,main**
 
 ### 🔶 `coverage-summary-path`
 
