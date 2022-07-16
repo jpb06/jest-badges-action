@@ -3,7 +3,7 @@
 module.exports = {
   logHeapUsage: true,
   transform: {
-    '^.+\\.ts$': ['babel-jest', { presets: [['@babel/preset-env', { targets: { node: 'current' } }], '@babel/preset-typescript'] }],
+    '^.+\\.[tj]s$': ['@swc/jest', {}],
   },
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: 'src',

@@ -4,7 +4,7 @@ description: 'Action generating jest coverage badges and pushing them to the rep
 inputs:
   branches:
     description: 'Branches on which the badges should be generated. Commas separated.'
-    default: 'master'
+    default: 'master,main'
   coverage-summary-path:
     description: 'Jest coverage summary path (json-summary). Defining this may be useful if you need to run this action on a monorepo.'
     default: './coverage/coverage-summary.json'
