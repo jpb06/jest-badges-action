@@ -8,11 +8,11 @@ jest.mock('fs-extra');
 describe('doBadgesExist function', () => {
   it('should return false if one file does not exist', async () => {
     mocked(pathExists)
-      .mockImplementationOnce(() => false)
-      .mockImplementationOnce(() => true)
-      .mockImplementationOnce(() => true)
-      .mockImplementationOnce(() => true)
-      .mockImplementationOnce(() => true);
+      .mockImplementationOnce(() => false as never)
+      .mockImplementationOnce(() => true as never)
+      .mockImplementationOnce(() => true as never)
+      .mockImplementationOnce(() => true as never)
+      .mockImplementationOnce(() => true as never);
 
     const result = await doBadgesExist();
 
@@ -21,11 +21,11 @@ describe('doBadgesExist function', () => {
 
   it('should return true if all files exist', async () => {
     mocked(pathExists)
-      .mockImplementationOnce(() => true)
-      .mockImplementationOnce(() => true)
-      .mockImplementationOnce(() => true)
-      .mockImplementationOnce(() => true)
-      .mockImplementationOnce(() => true);
+      .mockImplementationOnce(() => true as never)
+      .mockImplementationOnce(() => true as never)
+      .mockImplementationOnce(() => true as never)
+      .mockImplementationOnce(() => true as never)
+      .mockImplementationOnce(() => true as never);
 
     const result = await doBadgesExist();
 
