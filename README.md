@@ -77,7 +77,7 @@ Let's first define an npm script to run jest in package.json, specifying the cov
 ```json
 {
   "scripts": {
-    "test:ci": "jest --ci --coverage"
+    "test-ci": "jest --ci --coverage"
   }
 }
 ```
