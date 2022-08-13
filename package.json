@@ -25,6 +25,8 @@
     "node-jest-badges": "^1.3.3"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
     "@swc/core": "^1.2.228",
     "@swc/jest": "^0.2.22",
     "@types/fs-extra": "^9.0.13",
