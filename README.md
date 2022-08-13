@@ -28,6 +28,7 @@ Generating coverage badges and pushing them to the repository.
 
 This github action generates testing coverage badges using jest and pushes them to the repo at `./badges`. There is five badges generated:
 
+![Branches](./badges/coverage-branches.svg)
 ![Functions](./badges/coverage-functions.svg)
 ![Lines](./badges/coverage-lines.svg)
 ![Statements](./badges/coverage-statements.svg)
@@ -36,6 +37,7 @@ This github action generates testing coverage badges using jest and pushes them 
 You can use them on a readme like so:
 
 ```markdown
+![Branches](./badges/coverage-branches.svg)
 ![Functions](./badges/coverage-functions.svg)
 ![Lines](./badges/coverage-lines.svg)
 ![Statements](./badges/coverage-statements.svg)
