@@ -8,14 +8,14 @@
   "license": "MIT",
   "scripts": {
     "cleanDist": "rimraf ./dist && rimraf ./lib",
-    "build": "yarn cleanDist && tsc --project tsconfig.prod.json && ncc build --minify",
+    "build": "pnpm cleanDist && tsc --project tsconfig.prod.json && ncc build --minify",
     "lint": "eslint src/**/*.ts",
     "type-check": "tsc --noEmit ",
     "test": "jest",
-    "test:dev": "jest --watchAll --coverage",
-    "test:ci": "jest --ci --coverage",
+    "test-dev": "jest --watchAll --coverage",
+    "test-ci": "jest --ci --coverage",
     "badges": "generateBadges",
-    "sync-icons": "yarn generateReadmeIcons -h 70"
+    "sync-icons": "pnpm generateReadmeIcons -h 70"
   },
   "dependencies": {
     "@actions/core": "^1.9.1",
@@ -42,6 +42,7 @@
     "eslint-plugin-jest": "^26.8.2",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^28.1.3",
+    "jest-mock": "^28.1.3",
     "jest-watch-typeahead": "^2.0.0",
     "prettier": "^2.6.0",
     "readme-package-icons": "^1.1.2",
