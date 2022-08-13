@@ -3,7 +3,7 @@ name: Coverage badges generation & version bump
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   install:
