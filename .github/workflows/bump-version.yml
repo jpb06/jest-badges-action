@@ -11,12 +11,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+        uses: styfle/cancel-workflow-action@0.10.0
         with:
           access_token: ${{ github.token }}
 
       - name: Check out repository code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
@@ -26,7 +26,7 @@ jobs:
           version: latest
 
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3.4.1
         with:
           node-version-file: '.node-version'
           registry-url: 'https://registry.npmjs.org'
@@ -43,7 +43,7 @@ jobs:
 
       - name: Bump package version
         id: bumping-version
-        uses: jpb06/bump-package@v2.5.3
+        uses: jpb06/bump-package@v2.5.6
         with:
           major-keywords: BREAKING CHANGE
           minor-keywords: feat,minor
