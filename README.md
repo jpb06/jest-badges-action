@@ -70,6 +70,12 @@ Jest coverage summary path (json-summary). Defining this may be useful if you ne
 
 > Default value: **./coverage/coverage-summary.json**
 
+### 🔶 `commit-message`
+
+Commit message of the commit with generated badges.
+
+> Default value: **Updating coverage badges**
+
 ## ⚡ Usage
 
 Let's first define an npm script to run jest in package.json, specifying the coverage option to generate a coverage report:
