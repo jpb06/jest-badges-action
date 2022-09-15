@@ -8,6 +8,9 @@ inputs:
   coverage-summary-path:
     description: 'Jest coverage summary path (json-summary). Defining this may be useful if you need to run this action on a monorepo.'
     default: './coverage/coverage-summary.json'
+  commit-message:
+    description: 'Commit message of the commit with generated badges.'
+    default: 'Updating coverage badges'
 
 runs:
   using: 'node12'
