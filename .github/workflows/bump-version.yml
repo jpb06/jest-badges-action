@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.10.0
+        uses: styfle/cancel-workflow-action@0.11.0
         with:
           access_token: ${{ github.token }}
 
@@ -21,7 +21,7 @@ jobs:
           # Disabling shallow clone is recommended for improving relevancy of reporting
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v2.2.2
+      - uses: pnpm/action-setup@v2.2.4
         with:
           version: latest
 
@@ -43,7 +43,7 @@ jobs:
 
       - name: Bump package version
         id: bumping-version
-        uses: jpb06/bump-package@v2.5.6
+        uses: jpb06/bump-package@v2.5.8
         with:
           major-keywords: BREAKING CHANGE
           minor-keywords: feat,minor
