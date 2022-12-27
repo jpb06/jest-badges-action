@@ -1,7 +1,7 @@
 # jest-badges-action
 
 [![Open in Visual Studio Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=2c2c32&color=007acc&logoColor=007acc)](https://open.vscode.dev/jpb06/jest-badges-action)
-![Github workflow](https://img.shields.io/github/workflow/status/jpb06/jest-badges-action/Tests?label=last%20workflow&logo=github-actions)
+![Github workflow](https://img.shields.io/github/actions/workflow/status/jpb06/jest-badges-action/tests-scan.yml?branch=master)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=security_rating)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
@@ -75,6 +75,18 @@ Jest coverage summary path (json-summary). Defining this may be useful if you ne
 Commit message of the commit with generated badges.
 
 > Default value: **Updating coverage badges**
+
+### 🔶 `commit-user`
+
+Customizing the name of the user committing generated badges (optional).
+
+> Default value: **<context.actor>**
+
+### 🔶 `commit-user-email`
+
+Customizing the email of the user committing generated badges (optional).
+
+> Default value: **<context.actor>@users.noreply.github.com**
 
 ## ⚡ Usage
 
