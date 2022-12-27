@@ -41,3 +41,7 @@ jobs:
         uses: ./
         with:
           no-commit: true
+
+      - name: Checking stuff is actually here
+        run: |
+          ls -la badges
