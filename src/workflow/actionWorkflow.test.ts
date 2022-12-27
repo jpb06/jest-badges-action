@@ -70,6 +70,23 @@ describe('actionWorkflow function', () => {
     expect(setFailed).toHaveBeenCalledTimes(0);
   });
 
+  it('should generate badges and not push them if no-commit is set to true', async () => {
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
+    jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
+    jest.mocked(getInput).mockReturnValueOnce('').mockReturnValueOnce('true');
+
+    await actionWorkflow();
+
+    expect(generateBadges).toHaveBeenCalledTimes(1);
+    expect(setGitConfig).toHaveBeenCalledTimes(0);
+    expect(pushBadges).toHaveBeenCalledTimes(0);
+
+    expect(info).toHaveBeenCalledTimes(2);
+    expect(setFailed).toHaveBeenCalledTimes(0);
+  });
+
   it('should generate badges and push them', async () => {
     jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
     jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
