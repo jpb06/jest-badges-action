@@ -1,5 +1,4 @@
 import { exec } from '@actions/exec';
-import { mocked } from 'jest-mock';
 
 import { hasCoverageEvolved } from './hasCoverageEvolved';
 
@@ -13,7 +12,7 @@ describe('hasCoverageEvolved function', () => {
   });
 
   it('should return true if diff returns one', async () => {
-    mocked(exec).mockResolvedValueOnce(1);
+    jest.mocked(exec).mockResolvedValueOnce(1);
 
     const result = await hasCoverageEvolved(true);
 
@@ -21,7 +20,7 @@ describe('hasCoverageEvolved function', () => {
   });
 
   it('should return false if diff returns zero', async () => {
-    mocked(exec).mockResolvedValueOnce(0);
+    jest.mocked(exec).mockResolvedValueOnce(0);
 
     const result = await hasCoverageEvolved(true);
 
