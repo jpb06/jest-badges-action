@@ -23,6 +23,7 @@ describe('actionWorkflow function', () => {
 
   it('should end the task if branch is not allowed', async () => {
     jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(false);
+    jest.mocked(getInput).mockReturnValueOnce('false');
 
     await actionWorkflow();
 
@@ -71,11 +72,10 @@ describe('actionWorkflow function', () => {
   });
 
   it('should generate badges and not push them if no-commit is set to true', async () => {
-    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
     jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
     jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
     jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
-    jest.mocked(getInput).mockReturnValueOnce('').mockReturnValueOnce('true');
+    jest.mocked(getInput).mockReturnValueOnce('true').mockReturnValueOnce('');
 
     await actionWorkflow();
 
@@ -127,7 +127,10 @@ describe('actionWorkflow function', () => {
     jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
     jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
     jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
-    jest.mocked(getInput).mockReturnValueOnce(path);
+    jest
+      .mocked(getInput)
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce(path);
 
     await actionWorkflow();
 
