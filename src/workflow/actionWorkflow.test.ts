@@ -1,5 +1,4 @@
 import { getInput, info, setFailed } from '@actions/core';
-import { mocked } from 'jest-mock';
 import { generateBadges } from 'node-jest-badges';
 
 import { pushBadges } from '../logic/git/pushBadges';
@@ -23,7 +22,7 @@ describe('actionWorkflow function', () => {
   afterEach(() => jest.clearAllMocks());
 
   it('should end the task if branch is not allowed', async () => {
-    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(false);
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(false);
 
     await actionWorkflow();
 
@@ -40,8 +39,8 @@ describe('actionWorkflow function', () => {
   });
 
   it('should fail the task if there is no coverage report', async () => {
-    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
-    mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(false);
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(false);
 
     await actionWorkflow();
 
@@ -56,10 +55,10 @@ describe('actionWorkflow function', () => {
   });
 
   it('should do nothing if coverage has not evolved', async () => {
-    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
-    mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
-    mocked(doBadgesExist).mockResolvedValueOnce(true);
-    mocked(hasCoverageEvolved).mockResolvedValueOnce(false);
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
+    jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(false);
 
     await actionWorkflow();
 
@@ -72,10 +71,10 @@ describe('actionWorkflow function', () => {
   });
 
   it('should generate badges and push them', async () => {
-    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
-    mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
-    mocked(doBadgesExist).mockResolvedValueOnce(true);
-    mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
+    jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
 
     await actionWorkflow();
 
@@ -88,11 +87,11 @@ describe('actionWorkflow function', () => {
   });
 
   it('should generate badges from the default summary path', async () => {
-    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
-    mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
-    mocked(doBadgesExist).mockResolvedValueOnce(true);
-    mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
-    mocked(getInput).mockReturnValueOnce('');
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
+    jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
+    jest.mocked(getInput).mockReturnValueOnce('');
 
     await actionWorkflow();
 
@@ -107,11 +106,11 @@ describe('actionWorkflow function', () => {
 
   it('should generate badges from a custom summary path', async () => {
     const path = './myModule/coverage-summary.json';
-    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
-    mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
-    mocked(doBadgesExist).mockResolvedValueOnce(true);
-    mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
-    mocked(getInput).mockReturnValueOnce(path);
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
+    jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
+    jest.mocked(getInput).mockReturnValueOnce(path);
 
     await actionWorkflow();
 
@@ -125,10 +124,10 @@ describe('actionWorkflow function', () => {
   });
 
   it('should fail the task if there is errors', async () => {
-    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
-    mocked(isJestCoverageReportAvailable).mockRejectedValueOnce(
-      new Error('Big bad error'),
-    );
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    jest
+      .mocked(isJestCoverageReportAvailable)
+      .mockRejectedValueOnce(new Error('Big bad error'));
 
     await actionWorkflow();
 
@@ -143,10 +142,10 @@ describe('actionWorkflow function', () => {
   });
 
   it('should display a generic error when no message is available', async () => {
-    mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
-    mocked(isJestCoverageReportAvailable).mockRejectedValueOnce(
-      'Big bad error',
-    );
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    jest
+      .mocked(isJestCoverageReportAvailable)
+      .mockRejectedValueOnce('Big bad error');
 
     await actionWorkflow();
 

@@ -1,5 +1,4 @@
 import { readFileSync } from 'fs-extra';
-import { mocked } from 'jest-mock';
 
 import { getCurrentBranch } from './getCurrentBranch';
 
@@ -7,7 +6,7 @@ jest.mock('fs-extra');
 
 describe('getCurrentBranch function', () => {
   it('should return undefined if github event path could not be parsed', () => {
-    mocked(readFileSync).mockImplementationOnce(() => {
+    jest.mocked(readFileSync).mockImplementationOnce(() => {
       throw new Error('Oh no!');
     });
 
@@ -17,7 +16,7 @@ describe('getCurrentBranch function', () => {
   });
 
   it('should return undefined if ref is missing', () => {
-    mocked(readFileSync).mockReturnValueOnce(
+    jest.mocked(readFileSync).mockReturnValueOnce(
       JSON.stringify({
         ref: undefined,
       }),
@@ -29,7 +28,7 @@ describe('getCurrentBranch function', () => {
   });
 
   it('should return the current branch', () => {
-    mocked(readFileSync).mockReturnValueOnce(
+    jest.mocked(readFileSync).mockReturnValueOnce(
       JSON.stringify({
         ref: 'refs/heads/master',
       }),

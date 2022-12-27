@@ -1,11 +1,21 @@
+import { getInput } from '@actions/core';
 import { exec } from '@actions/exec';
 import { context } from '@actions/github';
 
 export const setGitConfig = async (): Promise<void> => {
-  await exec('git config', ['--global', 'user.name', context.actor]);
+  const userEmail = getInput('commit-user-email');
+  const userName = getInput('commit-user');
+
+  await exec('git config', [
+    '--global',
+    'user.name',
+    userName.length === 0 ? context.actor : userName,
+  ]);
   await exec('git config', [
     '--global',
     'user.email',
-    `${context.actor}@users.noreply.github.com`,
+    userEmail.length === 0
+      ? `${context.actor}@users.noreply.github.com`
+      : userEmail,
   ]);
 };

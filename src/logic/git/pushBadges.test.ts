@@ -1,6 +1,5 @@
 import { getInput } from '@actions/core';
 import { exec } from '@actions/exec';
-import { mocked } from 'jest-mock';
 
 import { pushBadges } from './pushBadges';
 
@@ -11,7 +10,7 @@ describe('pushBadges function', () => {
   beforeEach(() => jest.clearAllMocks());
 
   it('should push changes', async () => {
-    mocked(getInput).mockReturnValueOnce('Updating coverage badges');
+    jest.mocked(getInput).mockReturnValueOnce('Updating coverage badges');
 
     await pushBadges();
 

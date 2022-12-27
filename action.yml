@@ -11,6 +11,12 @@ inputs:
   commit-message:
     description: 'Commit message of the commit with generated badges.'
     default: 'Updating coverage badges'
+  commit-user:
+    description: 'User for the commit containing generated badges.'
+    default: ''
+  commit-user-email:
+    description: 'User email for the commit containing generated badges.'
+    default: ''
 
 runs:
   using: 'node16'

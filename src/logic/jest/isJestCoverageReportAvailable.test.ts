@@ -1,5 +1,4 @@
 import { pathExists, readJson } from 'fs-extra';
-import { mocked } from 'jest-mock';
 
 import { isJestCoverageReportAvailable } from './isJestCoverageReportAvailable';
 
@@ -7,7 +6,7 @@ jest.mock('fs-extra');
 
 describe('isJestCoverageReportAvailable function', () => {
   it('should return false if coverage report does not exist', async () => {
-    mocked(pathExists).mockImplementationOnce(() => false as never);
+    jest.mocked(pathExists).mockImplementationOnce(() => false as never);
 
     const result = await isJestCoverageReportAvailable();
 
@@ -15,8 +14,8 @@ describe('isJestCoverageReportAvailable function', () => {
   });
 
   it('should return false if coverage report is missing', async () => {
-    mocked(pathExists).mockImplementationOnce(() => true as never);
-    mocked(readJson).mockImplementationOnce(() => undefined as never);
+    jest.mocked(pathExists).mockImplementationOnce(() => true as never);
+    jest.mocked(readJson).mockImplementationOnce(() => undefined as never);
 
     const result = await isJestCoverageReportAvailable();
 
@@ -24,8 +23,8 @@ describe('isJestCoverageReportAvailable function', () => {
   });
 
   it('should return false if coverage report is empty', async () => {
-    mocked(pathExists).mockImplementationOnce(() => true as never);
-    mocked(readJson).mockImplementationOnce(() => ({} as never));
+    jest.mocked(pathExists).mockImplementationOnce(() => true as never);
+    jest.mocked(readJson).mockImplementationOnce(() => ({} as never));
 
     const result = await isJestCoverageReportAvailable();
 
@@ -33,8 +32,8 @@ describe('isJestCoverageReportAvailable function', () => {
   });
 
   it('should return false if coverage report has missing details', async () => {
-    mocked(pathExists).mockImplementationOnce(() => true as never);
-    mocked(readJson).mockImplementationOnce(
+    jest.mocked(pathExists).mockImplementationOnce(() => true as never);
+    jest.mocked(readJson).mockImplementationOnce(
       () =>
         ({
           total: {
@@ -49,8 +48,8 @@ describe('isJestCoverageReportAvailable function', () => {
   });
 
   it('should return true', async () => {
-    mocked(pathExists).mockImplementationOnce(() => true as never);
-    mocked(readJson).mockImplementationOnce(
+    jest.mocked(pathExists).mockImplementationOnce(() => true as never);
+    jest.mocked(readJson).mockImplementationOnce(
       () =>
         ({
           total: {
