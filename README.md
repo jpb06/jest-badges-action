@@ -1,7 +1,7 @@
 # jest-badges-action
 
 [![Open in Visual Studio Code](https://img.shields.io/static/v1?logo=visualstudiocode&label=&message=Open%20in%20Visual%20Studio%20Code&labelColor=2c2c32&color=007acc&logoColor=007acc)](https://open.vscode.dev/jpb06/jest-badges-action)
-![Github workflow](https://img.shields.io/github/actions/workflow/status/jpb06/jest-badges-action/tests-scan.yml?branch=master)
+![Github workflow](https://img.shields.io/github/actions/workflow/status/jpb06/jest-badges-action/tests-scan.yml?branch=master&logo=github-actions&label=last%20workflow)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=jpb06_jest-badges-action)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=jpb06_jest-badges-action&metric=security_rating)](https://sonarcloud.io/dashboard?id=jpb06_jest-badges-action)
@@ -57,6 +57,12 @@ module.exports = {
 You also need to run jest before calling this action in your ci workflow. See `usage` for an example.
 
 ## ⚡ Inputs
+
+### 🔶 `no-commit`
+
+If set to `true`, badges won't be committed by the github action.
+
+> Default value: *false**
 
 ### 🔶 `branches`
 

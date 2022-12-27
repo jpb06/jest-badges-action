@@ -2,6 +2,9 @@ name: 'Jest badges generation action'
 description: 'Action generating jest coverage badges and pushing them to the repo'
 
 inputs:
+  no-commit:
+    description: 'If set to true, badges will not be committed by the github action.'
+    default: 'false'
   branches:
     description: 'Branches on which the badges should be generated. Commas separated.'
     default: 'master,main'

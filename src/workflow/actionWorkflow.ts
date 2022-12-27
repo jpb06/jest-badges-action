@@ -10,11 +10,14 @@ import { isJestCoverageReportAvailable } from '../logic/jest/isJestCoverageRepor
 
 export const actionWorkflow = async (): Promise<void> => {
   try {
-    const isBranchValid = isBranchValidForBadgesGeneration();
-    if (!isBranchValid) {
-      return info(
-        '🔶 Current branch does not belong to the branches allowed for badges generation, task dropped.',
-      );
+    const shouldCommit = getInput('no-commit') !== 'true';
+    if (shouldCommit) {
+      const isBranchValid = isBranchValidForBadgesGeneration();
+      if (!isBranchValid) {
+        return info(
+          '🔶 Current branch does not belong to the branches allowed for badges generation, task dropped.',
+        );
+      }
     }
 
     const isReportAvailable = await isJestCoverageReportAvailable();
@@ -35,6 +38,10 @@ export const actionWorkflow = async (): Promise<void> => {
       }`,
     );
     await generateBadges(summaryPath);
+
+    if (!shouldCommit) {
+      return info("🔶 `no-commit` set to true: badges won't be committed");
+    }
 
     const hasEvolved = await hasCoverageEvolved(badgesExist);
     if (!hasEvolved) {
