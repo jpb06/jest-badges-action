@@ -40,7 +40,7 @@ export const actionWorkflow = async (): Promise<void> => {
     await generateBadges(summaryPath);
 
     if (!shouldCommit) {
-      return info("🔶 `no-commit` set to true: badges won't be commited");
+      return info("🔶 `no-commit` set to true: badges won't be committed");
     }
 
     const hasEvolved = await hasCoverageEvolved(badgesExist);
