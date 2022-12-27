@@ -1,0 +1,44 @@
+name: Yolo
+
+on:
+  push:
+    branches:
+      - more-params
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: latest
+
+      - name: Setup node
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version-file: '.node-version'
+          cache: 'pnpm'
+
+      - name: Installing dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Tests
+        run: pnpm test-ci
+
+      - name: Generating coverage badges
+        uses: ./
+        with:
+          commit-user: jpb06
+          commit-user-email: jp.bois.06@outlook.fr
