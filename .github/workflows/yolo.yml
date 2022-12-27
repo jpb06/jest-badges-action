@@ -42,3 +42,4 @@ jobs:
         with:
           commit-user: jpb06
           commit-user-email: jp.bois.06@outlook.fr
+          branches: more-params
