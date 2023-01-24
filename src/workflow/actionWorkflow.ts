@@ -37,7 +37,12 @@ export const actionWorkflow = async (): Promise<void> => {
         summaryPath ? summaryPath : 'default coverage summary path'
       }`,
     );
-    await generateBadges(summaryPath);
+    const outputPath = getInput('output-folder');
+    if (outputPath === '') {
+      await generateBadges(summaryPath);
+    } else {
+      await generateBadges(summaryPath, outputPath);
+    }
 
     if (!shouldCommit) {
       return info("🔶 `no-commit` set to true: badges won't be committed");

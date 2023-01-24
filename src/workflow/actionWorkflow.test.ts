@@ -1,13 +1,13 @@
 import { getInput, info, setFailed } from '@actions/core';
 import { generateBadges } from 'node-jest-badges';
 
+import { actionWorkflow } from './actionWorkflow';
 import { pushBadges } from '../logic/git/pushBadges';
 import { setGitConfig } from '../logic/git/setGitConfig';
 import { isBranchValidForBadgesGeneration } from '../logic/inputs/isBranchValidForBadgesGeneration';
 import { doBadgesExist } from '../logic/jest/doBadgesExist';
 import { hasCoverageEvolved } from '../logic/jest/hasCoverageEvolved';
 import { isJestCoverageReportAvailable } from '../logic/jest/isJestCoverageReportAvailable';
-import { actionWorkflow } from './actionWorkflow';
 
 jest.mock('@actions/core');
 jest.mock('node-jest-badges');
@@ -42,6 +42,11 @@ describe('actionWorkflow function', () => {
   it('should fail the task if there is no coverage report', async () => {
     jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
     jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(false);
+    jest
+      .mocked(getInput)
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce('');
 
     await actionWorkflow();
 
@@ -75,7 +80,11 @@ describe('actionWorkflow function', () => {
     jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
     jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
     jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
-    jest.mocked(getInput).mockReturnValueOnce('true').mockReturnValueOnce('');
+    jest
+      .mocked(getInput)
+      .mockReturnValueOnce('true')
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce('');
 
     await actionWorkflow();
 
@@ -108,7 +117,11 @@ describe('actionWorkflow function', () => {
     jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
     jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
     jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
-    jest.mocked(getInput).mockReturnValueOnce('');
+    jest
+      .mocked(getInput)
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce('');
 
     await actionWorkflow();
 
@@ -135,7 +148,30 @@ describe('actionWorkflow function', () => {
     await actionWorkflow();
 
     expect(generateBadges).toHaveBeenCalledTimes(1);
-    expect(generateBadges).toHaveBeenCalledWith(path);
+    expect(generateBadges).toHaveBeenCalledWith(path, undefined);
+    expect(setGitConfig).toHaveBeenCalledTimes(1);
+    expect(pushBadges).toHaveBeenCalledTimes(1);
+
+    expect(info).toHaveBeenCalledTimes(2);
+    expect(setFailed).toHaveBeenCalledTimes(0);
+  });
+
+  it('should generate badges to a custom output folder', async () => {
+    const path = './out-path';
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
+    jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(true);
+    jest
+      .mocked(getInput)
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce(path);
+
+    await actionWorkflow();
+
+    expect(generateBadges).toHaveBeenCalledTimes(1);
+    expect(generateBadges).toHaveBeenCalledWith(undefined, path);
     expect(setGitConfig).toHaveBeenCalledTimes(1);
     expect(pushBadges).toHaveBeenCalledTimes(1);
 

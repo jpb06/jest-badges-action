@@ -94,6 +94,12 @@ Customizing the email of the user committing generated badges (optional).
 
 > Default value: **<context.actor>@users.noreply.github.com**
 
+### 🔶 `output-folder`
+
+Where badges should be written (optional).
+
+> Default value: **./badges**
+
 ## ⚡ Usage
 
 Let's first define an npm script to run jest in package.json, specifying the coverage option to generate a coverage report:
