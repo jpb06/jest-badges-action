@@ -20,6 +20,9 @@ inputs:
   commit-user-email:
     description: 'User email for the commit containing generated badges.'
     default: ''
+  output-folder:
+    description: 'Where badges should be written (optional).'
+    default: './badges'
 
 runs:
   using: 'node16'
