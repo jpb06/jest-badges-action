@@ -27,8 +27,6 @@ export const actionWorkflow = async (): Promise<void> => {
       );
     }
 
-    const badgesExist = await doBadgesExist();
-
     const summaryPathInput = getInput('coverage-summary-path');
     const summaryPath = summaryPathInput === '' ? undefined : summaryPathInput;
 
@@ -48,6 +46,8 @@ export const actionWorkflow = async (): Promise<void> => {
       return info("🔶 `no-commit` set to true: badges won't be committed");
     }
 
+    const badgesExist = await doBadgesExist(outputPath);
+
     const hasEvolved = await hasCoverageEvolved(badgesExist);
     if (!hasEvolved) {
       return info('🔶 Coverage has not evolved, no action required.');
@@ -55,7 +55,7 @@ export const actionWorkflow = async (): Promise<void> => {
 
     info('🔶 Pushing badges to the repo');
     await setGitConfig();
-    await pushBadges();
+    await pushBadges(outputPath);
   } catch (error) {
     if (error instanceof Error) {
       return setFailed(`🔶 Oh no! An error occured: ${error.message}`);
