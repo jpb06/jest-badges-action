@@ -76,6 +76,30 @@ describe('actionWorkflow function', () => {
     expect(setFailed).toHaveBeenCalledTimes(0);
   });
 
+  it('should check if coverage has not evolved in a custom output folder', async () => {
+    const path = './out-path';
+    jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
+    jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
+    jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
+    jest.mocked(hasCoverageEvolved).mockResolvedValueOnce(false);
+    jest
+      .mocked(getInput)
+      .mockReturnValueOnce('false')
+      .mockReturnValueOnce('')
+      .mockReturnValueOnce(path);
+
+    await actionWorkflow();
+
+    expect(generateBadges).toHaveBeenCalledTimes(1);
+    expect(setGitConfig).toHaveBeenCalledTimes(0);
+    expect(pushBadges).toHaveBeenCalledTimes(0);
+
+    expect(doBadgesExist).toHaveBeenCalledWith(path);
+
+    expect(info).toHaveBeenCalledTimes(2);
+    expect(setFailed).toHaveBeenCalledTimes(0);
+  });
+
   it('should generate badges and not push them if no-commit is set to true', async () => {
     jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
     jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
@@ -174,6 +198,7 @@ describe('actionWorkflow function', () => {
     expect(generateBadges).toHaveBeenCalledWith(undefined, path);
     expect(setGitConfig).toHaveBeenCalledTimes(1);
     expect(pushBadges).toHaveBeenCalledTimes(1);
+    expect(pushBadges).toHaveBeenCalledWith(path);
 
     expect(info).toHaveBeenCalledTimes(2);
     expect(setFailed).toHaveBeenCalledTimes(0);
