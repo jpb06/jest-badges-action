@@ -40,7 +40,7 @@ export const actionWorkflow = async (): Promise<void> => {
       await generateBadges(summaryPath);
     } else {
       console.log('before lib call', summaryPath, outputPath);
-      await generateBadges('./coverage/coverage-summary.json', './coverage');
+      await generateBadges(summaryPath, outputPath);
       console.log('after lib call');
     }
 
