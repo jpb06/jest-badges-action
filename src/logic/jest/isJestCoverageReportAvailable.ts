@@ -21,6 +21,7 @@ export const isJestCoverageReportAvailable = async (): Promise<boolean> => {
   if (!data || !data.total) {
     return false;
   }
+  console.log('json data', data, coverageSummaryPath);
 
   if (
     isUndefined(data.total.branches) ||
