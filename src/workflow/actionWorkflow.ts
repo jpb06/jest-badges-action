@@ -39,7 +39,9 @@ export const actionWorkflow = async (): Promise<void> => {
     if (outputPath === '') {
       await generateBadges(summaryPath);
     } else {
+      console.log('before lib call');
       await generateBadges(summaryPath, outputPath);
+      console.log('after lib call');
     }
 
     if (!shouldCommit) {
