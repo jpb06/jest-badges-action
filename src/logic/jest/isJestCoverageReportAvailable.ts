@@ -11,6 +11,7 @@ interface JestCoverage {
 export const isJestCoverageReportAvailable = async (): Promise<boolean> => {
   const coverageSummaryPath = getInput('coverage-summary-path');
 
+  console.log(process.cwd(), coverageSummaryPath);
   const coverageExists = await pathExists(coverageSummaryPath);
   if (!coverageExists) {
     return false;
