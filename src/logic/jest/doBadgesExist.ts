@@ -1,8 +1,6 @@
 import { pathExists } from 'fs-extra';
 
-export const doBadgesExist = async (
-  outputPath = './badges',
-): Promise<boolean> => {
+export const doBadgesExist = async (outputPath: string): Promise<boolean> => {
   const files = [
     'coverage-branches.svg',
     'coverage-functions.svg',

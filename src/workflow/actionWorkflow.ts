@@ -36,13 +36,9 @@ export const actionWorkflow = async (): Promise<void> => {
       }`,
     );
     const outputPath = getInput('output-folder');
-    if (outputPath === '') {
-      await generateBadges(summaryPath);
-    } else {
-      console.log('before lib call', summaryPath, outputPath);
-      await generateBadges(summaryPath, outputPath);
-      console.log('after lib call');
-    }
+    console.log('before lib call', summaryPath, outputPath);
+    await generateBadges(summaryPath, outputPath);
+    console.log('after lib call');
 
     if (!shouldCommit) {
       return info("🔶 `no-commit` set to true: badges won't be committed");
@@ -50,7 +46,7 @@ export const actionWorkflow = async (): Promise<void> => {
 
     const badgesExist = await doBadgesExist(outputPath);
 
-    const hasEvolved = await hasCoverageEvolved(badgesExist);
+    const hasEvolved = await hasCoverageEvolved(badgesExist, outputPath);
     if (!hasEvolved) {
       return info('🔶 Coverage has not evolved, no action required.');
     }
