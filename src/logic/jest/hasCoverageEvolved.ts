@@ -2,12 +2,13 @@ import { exec } from '@actions/exec';
 
 export const hasCoverageEvolved = async (
   badgesExist: boolean,
+  outputPath: string,
 ): Promise<boolean> => {
   if (!badgesExist) {
     return true;
   }
 
-  const code = await exec('git diff', ['--quiet', './badges/*'], {
+  const code = await exec('git diff', ['--quiet', `${outputPath}/*`], {
     ignoreReturnCode: true,
   });
 

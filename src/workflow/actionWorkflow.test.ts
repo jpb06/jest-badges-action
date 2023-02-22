@@ -137,6 +137,9 @@ describe('actionWorkflow function', () => {
   });
 
   it('should generate badges from the default summary path', async () => {
+    const summaryPath = './coverage/coverage-summary.json';
+    const outputPath = './badges';
+
     jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
     jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
     jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
@@ -144,13 +147,13 @@ describe('actionWorkflow function', () => {
     jest
       .mocked(getInput)
       .mockReturnValueOnce('')
-      .mockReturnValueOnce('')
-      .mockReturnValueOnce('');
+      .mockReturnValueOnce(summaryPath)
+      .mockReturnValueOnce(outputPath);
 
     await actionWorkflow();
 
     expect(generateBadges).toHaveBeenCalledTimes(1);
-    expect(generateBadges).toHaveBeenCalledWith(undefined);
+    expect(generateBadges).toHaveBeenCalledWith(summaryPath, outputPath);
     expect(setGitConfig).toHaveBeenCalledTimes(1);
     expect(pushBadges).toHaveBeenCalledTimes(1);
 
