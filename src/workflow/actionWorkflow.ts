@@ -30,21 +30,20 @@ export const actionWorkflow = async (): Promise<void> => {
     const summaryPathInput = getInput('coverage-summary-path');
     const summaryPath = summaryPathInput === '' ? undefined : summaryPathInput;
 
+    const outputPath = getInput('output-folder');
+    // this must be checked before generating badges (duh!)
+    const badgesExist = await doBadgesExist(outputPath);
+
     info(
       `🔶 Generating badges from ${
         summaryPath ? summaryPath : 'default coverage summary path'
       }`,
     );
-    const outputPath = getInput('output-folder');
-    console.log('before lib call', summaryPath, outputPath);
     await generateBadges(summaryPath, outputPath);
-    console.log('after lib call');
 
     if (!shouldCommit) {
       return info("🔶 `no-commit` set to true: badges won't be committed");
     }
-
-    const badgesExist = await doBadgesExist(outputPath);
 
     const hasEvolved = await hasCoverageEvolved(badgesExist, outputPath);
     if (!hasEvolved) {
