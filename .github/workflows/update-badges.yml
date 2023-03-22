@@ -2,6 +2,8 @@ name: Sync to develop branch and generate badges
 
 on:
   push:
+    branches:
+      - master
 
 jobs:
   sync-and-generate-badges:
@@ -20,8 +22,8 @@ jobs:
       - name: Checkout badges branch
         run: git checkout badges
 
-      - name: Rebase badges on develop
-        run: git merge origin/develop
+      - name: Rebase badges on master
+        run: git merge origin/master
 
       - name: Push badges branch
         run: git push origin badges
