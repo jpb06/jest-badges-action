@@ -1,4 +1,4 @@
-name: Sync to develop branch and generate badges
+name: Sync to master branch and generate badges
 
 on:
   push:
@@ -19,16 +19,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - run: git config --global user.name 'jpb06'
+      - run: git config --global user.email 'jpb06@users.noreply.github.com'
+
       - name: Checkout badges branch
-        run: git checkout badges
+        run: git switch badges
 
       - name: Rebase badges on master
-        run: git merge origin/master
+        run: git merge --strategy=ours origin/master
 
       - name: Push badges branch
         run: git push origin badges
 
       - name: Generating coverage badges
         uses: jpb06/jest-badges-action@latest
-          with:
-            branches: badges
+        with:
+          branches: badges
