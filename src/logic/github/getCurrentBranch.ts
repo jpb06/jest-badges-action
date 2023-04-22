@@ -1,20 +1,13 @@
-import { readFileSync } from 'fs-extra';
+import { info } from '@actions/core';
 
-import { GithubEvent } from '../../types/github';
+export const getCurrentBranch = (): string => {
+  const currentBranch =
+    process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME;
 
-export const getCurrentBranch = (): string | undefined => {
-  let event: GithubEvent;
-  try {
-    event = JSON.parse(
-      readFileSync(process.env.GITHUB_EVENT_PATH as string, {
-        encoding: 'utf8',
-      }),
-    );
-  } catch (err) {
-    return undefined;
+  if (!currentBranch || currentBranch === 'undefined') {
+    throw new Error('Unable to get current branch from github event.');
   }
 
-  const currentBranch = event.ref?.split('/').slice(2).join('/');
-
+  info(`🔶 Current branch is ${currentBranch}`);
   return currentBranch;
 };

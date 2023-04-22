@@ -1,38 +1,25 @@
-import { readFileSync } from 'fs-extra';
-
 import { getCurrentBranch } from './getCurrentBranch';
 
-jest.mock('fs-extra');
+jest.mock('@actions/core');
 
 describe('getCurrentBranch function', () => {
-  it('should return undefined if github event path could not be parsed', () => {
-    jest.mocked(readFileSync).mockImplementationOnce(() => {
-      throw new Error('Oh no!');
-    });
-
-    const result = getCurrentBranch();
-
-    expect(result).toBeUndefined();
+  beforeAll(() => {
+    process.env.GITHUB_HEAD_REF = undefined;
+    process.env.GITHUB_REF_NAME = undefined;
   });
 
-  it('should return undefined if ref is missing', () => {
-    jest.mocked(readFileSync).mockReturnValueOnce(
-      JSON.stringify({
-        ref: undefined,
-      }),
+  it('should throw an error when branch name could not be defined', () => {
+    process.env.GITHUB_HEAD_REF = undefined;
+    process.env.GITHUB_REF_NAME = undefined;
+
+    expect(getCurrentBranch).toThrow(
+      'Unable to get current branch from github event.',
     );
-
-    const result = getCurrentBranch();
-
-    expect(result).toBeUndefined();
   });
 
   it('should return the current branch', () => {
-    jest.mocked(readFileSync).mockReturnValueOnce(
-      JSON.stringify({
-        ref: 'refs/heads/master',
-      }),
-    );
+    process.env.GITHUB_HEAD_REF = 'master';
+    process.env.GITHUB_REF_NAME = undefined;
 
     const result = getCurrentBranch();
 
