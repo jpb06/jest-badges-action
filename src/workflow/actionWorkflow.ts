@@ -3,6 +3,7 @@ import { generateBadges } from 'node-jest-badges';
 
 import { pushBadges } from '../logic/git/pushBadges';
 import { setGitConfig } from '../logic/git/setGitConfig';
+import { getCurrentBranch } from '../logic/github/getCurrentBranch';
 import { isBranchValidForBadgesGeneration } from '../logic/inputs/isBranchValidForBadgesGeneration';
 import { doBadgesExist } from '../logic/jest/doBadgesExist';
 import { hasCoverageEvolved } from '../logic/jest/hasCoverageEvolved';
@@ -10,9 +11,10 @@ import { isJestCoverageReportAvailable } from '../logic/jest/isJestCoverageRepor
 
 export const actionWorkflow = async (): Promise<void> => {
   try {
+    const currentBranch = getCurrentBranch();
     const shouldCommit = getInput('no-commit') !== 'true';
     if (shouldCommit) {
-      const isBranchValid = isBranchValidForBadgesGeneration();
+      const isBranchValid = isBranchValidForBadgesGeneration(currentBranch);
       if (!isBranchValid) {
         return info(
           '🔶 Current branch does not belong to the branches allowed for badges generation, task dropped.',
@@ -52,7 +54,7 @@ export const actionWorkflow = async (): Promise<void> => {
 
     info('🔶 Pushing badges to the repo');
     await setGitConfig();
-    await pushBadges(outputPath);
+    await pushBadges(currentBranch, outputPath);
   } catch (error) {
     if (error instanceof Error) {
       return setFailed(`🔶 Oh no! An error occured: ${error.message}`);

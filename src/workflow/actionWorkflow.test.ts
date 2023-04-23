@@ -4,6 +4,7 @@ import { generateBadges } from 'node-jest-badges';
 import { actionWorkflow } from './actionWorkflow';
 import { pushBadges } from '../logic/git/pushBadges';
 import { setGitConfig } from '../logic/git/setGitConfig';
+import { getCurrentBranch } from '../logic/github/getCurrentBranch';
 import { isBranchValidForBadgesGeneration } from '../logic/inputs/isBranchValidForBadgesGeneration';
 import { doBadgesExist } from '../logic/jest/doBadgesExist';
 import { hasCoverageEvolved } from '../logic/jest/hasCoverageEvolved';
@@ -17,11 +18,13 @@ jest.mock('../logic/jest/isJestCoverageReportAvailable');
 jest.mock('../logic/jest/doBadgesExist');
 jest.mock('../logic/jest/hasCoverageEvolved');
 jest.mock('../logic/inputs/isBranchValidForBadgesGeneration');
+jest.mock('../logic/github/getCurrentBranch');
 
 describe('actionWorkflow function', () => {
   afterEach(() => jest.clearAllMocks());
 
   it('should end the task if branch is not allowed', async () => {
+    jest.mocked(getCurrentBranch).mockReturnValueOnce('cool');
     jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(false);
     jest.mocked(getInput).mockReturnValueOnce('false');
 
@@ -185,6 +188,9 @@ describe('actionWorkflow function', () => {
 
   it('should generate badges to a custom output folder', async () => {
     const path = './out-path';
+    const branchName = 'master';
+
+    jest.mocked(getCurrentBranch).mockReturnValueOnce(branchName);
     jest.mocked(isBranchValidForBadgesGeneration).mockReturnValueOnce(true);
     jest.mocked(isJestCoverageReportAvailable).mockResolvedValueOnce(true);
     jest.mocked(doBadgesExist).mockResolvedValueOnce(true);
@@ -201,7 +207,7 @@ describe('actionWorkflow function', () => {
     expect(generateBadges).toHaveBeenCalledWith(undefined, path);
     expect(setGitConfig).toHaveBeenCalledTimes(1);
     expect(pushBadges).toHaveBeenCalledTimes(1);
-    expect(pushBadges).toHaveBeenCalledWith(path);
+    expect(pushBadges).toHaveBeenCalledWith(branchName, path);
 
     expect(info).toHaveBeenCalledTimes(2);
     expect(setFailed).toHaveBeenCalledTimes(0);
