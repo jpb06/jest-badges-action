@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - switching-to-node-18
 
 jobs:
   sync-and-generate-badges:
@@ -31,5 +30,5 @@ jobs:
 
       - name: Generating coverage badges
         uses: jpb06/jest-badges-action@latest
-          with:
-            branches: badges
+        with:
+          branches: badges
