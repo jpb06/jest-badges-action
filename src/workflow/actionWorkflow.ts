@@ -4,6 +4,7 @@ import { generateBadges } from 'node-jest-badges';
 import { pushBadges } from '../logic/git/pushBadges';
 import { setGitConfig } from '../logic/git/setGitConfig';
 import { getCurrentBranch } from '../logic/github/getCurrentBranch';
+import { getTargetBranch } from '../logic/github/getTargetBranch';
 import { isBranchValidForBadgesGeneration } from '../logic/inputs/isBranchValidForBadgesGeneration';
 import { doBadgesExist } from '../logic/jest/doBadgesExist';
 import { hasCoverageEvolved } from '../logic/jest/hasCoverageEvolved';
@@ -54,7 +55,9 @@ export const actionWorkflow = async (): Promise<void> => {
 
     info('🔶 Pushing badges to the repo');
     await setGitConfig();
-    await pushBadges(currentBranch, outputPath);
+
+    const targetBranch = getTargetBranch(currentBranch);
+    await pushBadges(targetBranch, outputPath);
   } catch (error) {
     if (error instanceof Error) {
       return setFailed(`🔶 Oh no! An error occured: ${error.message}`);

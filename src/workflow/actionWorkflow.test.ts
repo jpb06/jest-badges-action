@@ -199,7 +199,8 @@ describe('actionWorkflow function', () => {
       .mocked(getInput)
       .mockReturnValueOnce('false')
       .mockReturnValueOnce('')
-      .mockReturnValueOnce(path);
+      .mockReturnValueOnce(path)
+      .mockReturnValueOnce('');
 
     await actionWorkflow();
 
