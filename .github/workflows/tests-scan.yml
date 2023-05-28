@@ -44,11 +44,6 @@ jobs:
       - name: Tests
         run: pnpm test-ci
 
-      - name: Running action locally
-        uses: ./
-        with:
-          branches: switching-to-node-18
-
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
