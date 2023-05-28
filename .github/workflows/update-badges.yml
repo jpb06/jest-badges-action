@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - switching-to-node-18
 
 jobs:
   sync-and-generate-badges:
