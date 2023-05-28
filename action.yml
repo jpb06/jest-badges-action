@@ -8,6 +8,9 @@ inputs:
   branches:
     description: 'Branches on which the badges should be generated. Commas separated.'
     default: 'master,main'
+  target-branch:
+    description: 'Branch on which badges should be pushed. If left empty, current branch will be used.'
+    default: ''
   coverage-summary-path:
     description: 'Jest coverage summary path (json-summary). Defining this may be useful if you need to run this action on a monorepo.'
     default: './coverage/coverage-summary.json'

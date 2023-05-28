@@ -66,9 +66,13 @@ If set to `true`, badges won't be committed by the github action.
 
 ### 🔶 `branches`
 
-Branches on which the badges should be generated, separated by commas.
+Branches on which the badges should be generated, separated by commas. Optionally, you can set the value as `*` to specify generation should always happen.
 
 > Default value: **master,main**
+
+### 🔶 `target-branch`
+
+The branch on which generated badges should be pushed. If unset, the current branch (on which the action is ran against) will be used.
 
 ### 🔶 `coverage-summary-path`
 
@@ -123,7 +127,7 @@ jobs:
     steps:
     # Necessary to push the generated badges to the repo
     - name: Check out repository code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     # Necessary to generate the coverage report.
     # Make sure to add 'json-summary' to the coverageReporters in jest options
     - name: Tests
@@ -148,4 +152,60 @@ In case you need to define a custom path for the coverage summary file, you can 
       uses: jpb06/jest-badges-action@latest
         with:
           coverage-summary-path: ./my-module/coverage/coverage-summary.json
+```
+
+### 🔶 Pushing generated badges to a custom branch
+
+Your perpetual branches should be protected to avoid some people from force pushing on them for example. Sadly there is no way to push badges to a protected branch 😿.
+
+A workaround is to push them to a custom branch. Here is an example using a `badges` branch:
+
+```yaml
+name: Generate badges on custom branch
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  generate-badges-on-custom-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: latest
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.node-version'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
+
+      - name: Installing dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Delete remote badges branch
+        run: git push origin --delete badges
+
+      - name: Create badges branch
+        run: git checkout -b badges
+
+      - name: Tests
+        run: pnpm test-ci
+
+      - name: Generating coverage badges
+        uses: ./
+        with:
+          branches: '*'
+          target-branch: badges
+
+      - name: Push badges branch
+        run: git push origin badges
 ```
