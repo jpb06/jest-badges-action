@@ -17,7 +17,7 @@ export const isJestCoverageReportAvailable = async (): Promise<boolean> => {
   }
 
   const data: JestCoverage = await readJson(coverageSummaryPath);
-  if (!data || !data.total) {
+  if (!data?.total) {
     return false;
   }
 
