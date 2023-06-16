@@ -25,4 +25,13 @@ describe('getCurrentBranch function', () => {
 
     expect(result).toBe('master');
   });
+
+  it('should return the current branch from ref name env var', () => {
+    process.env.GITHUB_HEAD_REF = undefined;
+    process.env.GITHUB_REF_NAME = 'cool';
+
+    const result = getCurrentBranch();
+
+    expect(result).toBe('cool');
+  });
 });
