@@ -24,6 +24,8 @@ Generating coverage badges and pushing them to the repository.
 
 <!-- readme-package-icons end -->
 
+# 😺 This action is replaced by [coverage-badges-action](https://github.com/jpb06/coverage-badges-action)
+
 ## ⚡ Description
 
 This github action generates testing coverage badges using jest and pushes them to the repo at `./badges`. There is five badges generated:
